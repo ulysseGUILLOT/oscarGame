@@ -7,6 +7,7 @@
 Game::Game() {
     score = 0;
     lifeNb = LIFENB;
+    active = true;
     initSdl();
     initWindow("OscarGame", WSCREEN, HSCREEN);
     initRenderer();
@@ -63,4 +64,58 @@ void Game::presentRenderer() {
     SDL_RenderPresent(pRenderer);
 }
 
+SDL_Renderer *Game::getPRenderer() const {
+    return pRenderer;
+}
 
+void Game::setPRenderer(SDL_Renderer *pRenderer) {
+    Game::pRenderer = pRenderer;
+}
+
+int Game::getScore() const {
+    return score;
+}
+
+void Game::setScore(int score) {
+    Game::score = score;
+}
+
+int Game::getLifeNb() const {
+    return lifeNb;
+}
+
+void Game::setLifeNb(int lifeNb) {
+    Game::lifeNb = lifeNb;
+}
+
+bool Game::isActive() const {
+    return active;
+}
+
+void Game::setActive(bool active) {
+    Game::active = active;
+}
+
+const std::vector<Trash> &Game::getTrashes() const {
+    return trashes;
+}
+
+void Game::setTrashes(const std::vector<Trash> &trashes) {
+    Game::trashes = trashes;
+}
+
+const Rocket &Game::getRocket() const {
+    return rocket;
+}
+
+void Game::setRocket(const Rocket &rocket) {
+    Game::rocket = rocket;
+}
+
+SDL_Window *Game::getPWindow() const {
+    return pWindow;
+}
+
+void Game::setPWindow(SDL_Window *pWindow) {
+    Game::pWindow = pWindow;
+}
