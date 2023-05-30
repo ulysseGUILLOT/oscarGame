@@ -15,6 +15,7 @@
 #define LIFENB 3
 #define WSCREEN 800
 #define HSCREEN 600
+#define TITLE "OscarGame"
 
 class Game {
 private:
@@ -32,7 +33,7 @@ public:
     Game();
     ~Game();
     void initSdl();
-    void initWindow(std::string title, int width, int height);
+    void initWindow();
     void initRenderer();
     void presentRenderer();
 

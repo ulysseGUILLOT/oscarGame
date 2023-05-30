@@ -9,7 +9,7 @@ Game::Game() {
     lifeNb = LIFENB;
     active = true;
     initSdl();
-    initWindow("OscarGame", WSCREEN, HSCREEN);
+    initWindow();
     initRenderer();
 }
 
@@ -26,8 +26,8 @@ void Game::initSdl() {
     }
 }
 
-void Game::initWindow(std::string title, int width, int height) {
-    pWindow = SDL_CreateWindow("Hello World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+void Game::initWindow() {
+    pWindow = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WSCREEN, HSCREEN, SDL_WINDOW_SHOWN);
     if (!pWindow) {
         std::cout << "Erreur lors de la création de la fenêtre : " << SDL_GetError() << std::endl;
         SDL_Quit();

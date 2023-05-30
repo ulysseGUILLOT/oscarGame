@@ -18,9 +18,10 @@ private:
     SDL_Texture* pTexture;
 
 public:
-    void launch();
+    void fly();
     void reset();
     bool testCollision();
+    void toRenderer();
 };
 
 
