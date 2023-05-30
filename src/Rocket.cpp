@@ -5,8 +5,8 @@
 #include "Rocket.h"
 
 Rocket::Rocket() {
-    posX = 0;
-    posY = 0;
+    posX = WSCREEN / 2;
+    posY = HSCREEN / 2;
     isMoving = false;
     pSprite = SDL_LoadBMP("../src/img/rocket.bmp");
     if (!pSprite) {
@@ -23,7 +23,7 @@ void Rocket::toRenderer(SDL_Renderer *pRenderer) {
     SDL_SetColorKey(pSprite, SDL_TRUE, SDL_MapRGB(pSprite->format, 0, 255, 255));
     pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
     if (pTexture) {
-        SDL_Rect dest = { posX - pSprite->w/2,posY - pSprite->h/2, pSprite->w, pSprite->h};
+        SDL_Rect dest = {posX - pSprite->w / 2, posY - pSprite->h / 2, pSprite->w, pSprite->h};
         SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);
 
         SDL_DestroyTexture(pTexture);

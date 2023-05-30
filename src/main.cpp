@@ -1,4 +1,5 @@
 #include "header.h"
+#include "Game.h"
 
 int main(int argc, char *argv[]) {
     // initialisation de la partie

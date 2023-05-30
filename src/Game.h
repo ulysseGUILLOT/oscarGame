@@ -6,6 +6,8 @@
 #define OSCARGAME_GAME_H
 
 #include "header.h"
+#include "Trash.h"
+#include "Rocket.h"
 
 class Game {
 private:
