@@ -6,8 +6,8 @@
 #define OSCARGAME_HEADER_H
 
 #define LIFENB 3
-#define WSCREEN 800
-#define HSCREEN 600
+#define WSCREEN 1920
+#define HSCREEN 1080
 #define TITLE "OscarGame"
 
 #include <iostream>

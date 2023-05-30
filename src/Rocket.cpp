@@ -7,7 +7,7 @@
 Rocket::Rocket() {
     posX = WSCREEN / 2;
     posY = HSCREEN / 2;
-    isMoving = false;
+    moving = false;
     pSprite = SDL_LoadBMP("../src/img/rocket.bmp");
     if (!pSprite) {
         std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
@@ -30,5 +30,25 @@ void Rocket::toRenderer(SDL_Renderer *pRenderer) {
     } else {
         std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
     }
+}
+
+void Rocket::refreshPos() {
+    if (moving) {
+        if (posY >= 0 - pSprite->h / 2)
+        {
+            posY--;
+        }else {
+            moving = false;
+            posY = HSCREEN / 2;
+        }
+    }
+}
+
+bool Rocket::isMoving() const {
+    return moving;
+}
+
+void Rocket::setMoving(bool moving) {
+    Rocket::moving = moving;
 }
 

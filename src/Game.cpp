@@ -11,10 +11,21 @@ Game::Game() {
     initSdl();
     initWindow();
     initRenderer();
+
+    pSurfaceBackground = SDL_LoadBMP("../src/img/background.bmp");
+    if (!pSurfaceBackground) {
+        std::cout << "Echec de chargement du background : " << SDL_GetError() << std::endl;
+    }
+    pTextureBackground = SDL_CreateTextureFromSurface(pRenderer, pSurfaceBackground);
+    if (!pTextureBackground) {
+        std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+        active = false;
+    }
 }
 
 Game::~Game() {
     rocket.~Rocket();
+    SDL_DestroyTexture(pTextureBackground);
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
@@ -28,7 +39,7 @@ void Game::initSdl() {
 }
 
 void Game::initWindow() {
-    pWindow = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WSCREEN, HSCREEN, SDL_WINDOW_SHOWN);
+    pWindow = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_FULLSCREEN);
     if (!pWindow) {
         std::cout << "Erreur lors de la création de la fenêtre : " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -48,7 +59,15 @@ void Game::initRenderer() {
 
 void Game::presentRenderer() {
     SDL_RenderClear(pRenderer);
+
+    //Affichage du background
+    SDL_Rect dest = {0, 0, pSurfaceBackground->w, pSurfaceBackground->h};
+    SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
+
+    // affichage de la fusée
     rocket.toRenderer(pRenderer);
+
+    // afficher le rendu total
     SDL_RenderPresent(pRenderer);
 }
 
@@ -92,7 +111,7 @@ void Game::setTrashes(const std::vector<Trash> &trashes) {
     Game::trashes = trashes;
 }
 
-const Rocket &Game::getRocket() const {
+Rocket &Game::getRocket() {
     return rocket;
 }
 

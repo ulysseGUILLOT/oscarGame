@@ -11,7 +11,7 @@ class Rocket {
 private:
     int posX;
     int posY;
-    bool isMoving;
+    bool moving;
 
     SDL_Rect collisionRect;
     SDL_Surface* pSprite;
@@ -20,10 +20,13 @@ private:
 public:
     Rocket();
     ~Rocket();
-    void fly();
+    void refreshPos();
     void reset();
     bool testCollision();
     void toRenderer(SDL_Renderer *pRenderer);
+
+    bool isMoving() const;
+    void setMoving(bool moving);
 };
 
 

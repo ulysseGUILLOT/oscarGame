@@ -21,6 +21,9 @@ private:
     SDL_Window* pWindow;
     SDL_Renderer* pRenderer;
 
+    SDL_Surface* pSurfaceBackground;
+    SDL_Texture* pTextureBackground;
+
 public:
     Game();
     ~Game();
@@ -39,7 +42,7 @@ public:
     void setActive(bool active);
     const std::vector<Trash> &getTrashes() const;
     void setTrashes(const std::vector<Trash> &trashes);
-    const Rocket &getRocket() const;
+    Rocket &getRocket();
     void setRocket(const Rocket &rocket);
     SDL_Window *getPWindow() const;
     void setPWindow(SDL_Window *pWindow);
