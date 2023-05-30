@@ -5,7 +5,7 @@
 #ifndef OSCARGAME_TRASH_H
 #define OSCARGAME_TRASH_H
 
-#include <SDL.h>
+#include "header.h"
 
 class Trash {
 private:

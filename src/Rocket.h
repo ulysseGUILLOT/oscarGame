@@ -5,7 +5,7 @@
 #ifndef OSCARGAME_ROCKET_H
 #define OSCARGAME_ROCKET_H
 
-#include <SDL.h>
+#include "header.h"
 
 class Rocket {
 private:
@@ -14,14 +14,16 @@ private:
     bool isMoving;
 
     SDL_Rect collisionRect;
-    SDL_Surface* pSurface;
+    SDL_Surface* pSprite;
     SDL_Texture* pTexture;
 
 public:
+    Rocket();
+    ~Rocket();
     void fly();
     void reset();
     bool testCollision();
-    void toRenderer();
+    void toRenderer(SDL_Renderer *pRenderer);
 };
 
 

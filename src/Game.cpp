@@ -14,6 +14,7 @@ Game::Game() {
 }
 
 Game::~Game() {
+    rocket.~Rocket();
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
@@ -46,21 +47,8 @@ void Game::initRenderer() {
 }
 
 void Game::presentRenderer() {
-
-    // Effacer le rendu avec une couleur de fond
-    SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
     SDL_RenderClear(pRenderer);
-
-    // Afficher "Hello World" dans la fenêtre
-    SDL_Color textColor = { 0, 0, 0, 255 };
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, 200, 100, 32, 0, 0, 0, 0);
-    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(pRenderer, surface);
-    SDL_FreeSurface(surface);
-    SDL_Rect destRect = { 220, 190, 200, 100 };
-    SDL_RenderCopy(pRenderer, texture, NULL, &destRect);
-    SDL_DestroyTexture(texture);
-
+    rocket.toRenderer(pRenderer);
     SDL_RenderPresent(pRenderer);
 }
 

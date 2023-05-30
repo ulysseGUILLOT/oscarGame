@@ -5,17 +5,7 @@
 #ifndef OSCARGAME_GAME_H
 #define OSCARGAME_GAME_H
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <SDL.h>
-#include "Trash.h"
-#include "Rocket.h"
-
-#define LIFENB 3
-#define WSCREEN 800
-#define HSCREEN 600
-#define TITLE "OscarGame"
+#include "header.h"
 
 class Game {
 private:
