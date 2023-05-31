@@ -24,6 +24,9 @@ private:
     SDL_Surface* pSurfaceBackground;
     SDL_Texture* pTextureBackground;
 
+    SDL_Surface* pSurfaceEarth;
+    SDL_Texture* pTextureEarth;
+
 public:
     Game();
     ~Game();

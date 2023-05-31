@@ -21,11 +21,23 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
         active = false;
     }
+
+    pSurfaceEarth = SDL_LoadBMP("../src/img/earth.bmp");
+    if (!pSurfaceEarth) {
+        std::cout << "Echec de chargement du background : " << SDL_GetError() << std::endl;
+    }
+    SDL_SetColorKey(pSurfaceEarth, SDL_TRUE, SDL_MapRGB(pSurfaceEarth->format, 0, 255, 255));
+    pTextureEarth = SDL_CreateTextureFromSurface(pRenderer, pSurfaceEarth);
+    if (!pTextureEarth) {
+        std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+        active = false;
+    }
 }
 
 Game::~Game() {
     rocket.~Rocket();
     SDL_DestroyTexture(pTextureBackground);
+    SDL_DestroyTexture(pTextureEarth);
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
@@ -63,6 +75,10 @@ void Game::presentRenderer() {
     //Affichage du background
     SDL_Rect dest = {0, 0, pSurfaceBackground->w, pSurfaceBackground->h};
     SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
+
+    //Affichage du background
+    dest = {(WSCREEN / 2) - (pSurfaceEarth->w / 2), (HSCREEN / 2) - (pSurfaceEarth->h / 2), pSurfaceEarth->w, pSurfaceEarth->h};
+    SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
 
     // affichage de la fusée
     rocket.toRenderer(pRenderer);
