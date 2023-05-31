@@ -83,6 +83,9 @@ void Game::presentRenderer() {
     // affichage de la fusée
     rocket.toRenderer(pRenderer);
 
+    // attend le temps necessaire pour obtenir 60fps
+    regulateFps();
+
     // afficher le rendu total
     SDL_RenderPresent(pRenderer);
 }
@@ -141,4 +144,17 @@ SDL_Window *Game::getPWindow() const {
 
 void Game::setPWindow(SDL_Window *pWindow) {
     Game::pWindow = pWindow;
+}
+
+void Game::regulateFps() {
+    Uint32 targetFrameTime = 1000 / FPS; // obtention du temps d'une frame en ms
+    Uint32 elapsedFrameTime = SDL_GetTicks() - lastFrameTime;
+
+    if (elapsedFrameTime < targetFrameTime) {
+        SDL_Delay(targetFrameTime - elapsedFrameTime);
+    }
+}
+
+void Game::setLastFrameTime(Uint32 lastFrameTime) {
+    Game::lastFrameTime = lastFrameTime;
 }

@@ -15,6 +15,8 @@ private:
     int lifeNb;
     bool active;
 
+    Uint32 lastFrameTime;
+
     std::vector <Trash> trashes;
     Rocket rocket;
 
@@ -34,6 +36,7 @@ public:
     void initWindow();
     void initRenderer();
     void presentRenderer();
+    void regulateFps();
 
     SDL_Renderer* getPRenderer() const;
     void setPRenderer(SDL_Renderer *pRenderer);
@@ -49,6 +52,7 @@ public:
     void setRocket(const Rocket &rocket);
     SDL_Window *getPWindow() const;
     void setPWindow(SDL_Window *pWindow);
+    void setLastFrameTime(Uint32 lastFrameTime);
 };
 
 

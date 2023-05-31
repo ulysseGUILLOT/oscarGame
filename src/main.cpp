@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     // lancement de la boucle de jeu
     SDL_Event event;
     while (game.isActive()) {
+        game.setLastFrameTime(SDL_GetTicks());
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 game.setActive(false);
@@ -24,6 +25,8 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+
+        // réactualise la position de la fusée
         game.getRocket().refreshPos();
 
         // affichage de la fenetre de jeu
