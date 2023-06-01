@@ -5,7 +5,7 @@
 #ifndef OSCARGAME_TRASH_H
 #define OSCARGAME_TRASH_H
 
-#define TRASH_ORBIT_RADIUS 300
+#define TRASH_ORBIT_RADIUS 450
 
 #include "header.h"
 
@@ -21,7 +21,6 @@ private:
 
 public:
     Trash();
-    ~Trash();
     void toRender(SDL_Renderer* pRenderer);
     void calculateCoordFromAngle();
 };

@@ -2,6 +2,8 @@
 #include "Game.h"
 
 int main(int argc, char *argv[]) {
+    srand(time(nullptr));
+
     // initialisation de la partie
     Game game;
 

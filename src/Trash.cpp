@@ -5,7 +5,8 @@
 #include "Trash.h"
 
 Trash::Trash() {
-    rotationAngleDegrees = 0;
+    rotationAngleDegrees = rand() % 360;
+
 
     pSprite = SDL_LoadBMP("../src/img/trash.bmp");
     if (!pSprite) {
@@ -13,14 +14,11 @@ Trash::Trash() {
     }
 }
 
-Trash::~Trash() {
-}
-
 void Trash::toRender(SDL_Renderer *pRenderer) {
     pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
     if (pTexture) {
         calculateCoordFromAngle();
-        SDL_Rect dest = {posX, posY, pSprite->w, pSprite->h};
+        SDL_Rect dest = {posX - pSprite->w / 2, posY- pSprite->h / 2, pSprite->w, pSprite->h};
         SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);
     } else {
         std::cout << "Echec de la creation de la texture dechet : " << SDL_GetError() << std::endl;

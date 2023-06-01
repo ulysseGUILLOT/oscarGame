@@ -86,7 +86,6 @@ void Game::presentRenderer() {
     // affichage des déchets
 
     for (int i = 0; i < trashes.size(); i++) {
-        std::cout << "here" << std::endl;
         trashes[i].toRender(pRenderer);
     }
 
