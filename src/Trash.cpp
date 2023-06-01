@@ -14,7 +14,6 @@ Trash::Trash() {
 }
 
 Trash::~Trash() {
-    SDL_DestroyTexture(pTexture);
 }
 
 void Trash::toRender(SDL_Renderer *pRenderer) {
