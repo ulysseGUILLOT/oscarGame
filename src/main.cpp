@@ -27,7 +27,10 @@ int main(int argc, char *argv[]) {
         }
 
         // réactualise la position de la fusée
-        game.getRocket().refreshPos();
+        if (game.getRocket().checkAndRefreshPos()) {
+            // ajoute un dechet si la fusée atteint le ciel
+            game.addTrash();
+        }
 
         // affichage de la fenetre de jeu
         game.presentRenderer();

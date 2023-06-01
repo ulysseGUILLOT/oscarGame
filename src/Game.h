@@ -37,6 +37,7 @@ public:
     void initRenderer();
     void presentRenderer();
     void regulateFps();
+    void addTrash();
 
     SDL_Renderer* getPRenderer() const;
     void setPRenderer(SDL_Renderer *pRenderer);
@@ -46,7 +47,7 @@ public:
     void setLifeNb(int lifeNb);
     bool isActive() const;
     void setActive(bool active);
-    const std::vector<Trash> &getTrashes() const;
+    std::vector<Trash> &getTrashes();
     void setTrashes(const std::vector<Trash> &trashes);
     Rocket &getRocket();
     void setRocket(const Rocket &rocket);

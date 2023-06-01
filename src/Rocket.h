@@ -13,14 +13,16 @@ private:
     int posY;
     bool moving;
 
-    SDL_Rect collisionRect;
     SDL_Surface* pSprite;
     SDL_Texture* pTexture;
+
+    SDL_Surface* pSurfaceCollision;
+    SDL_Texture* pTextureCollision;
 
 public:
     Rocket();
     ~Rocket();
-    void refreshPos();
+    bool checkAndRefreshPos();
     void reset();
     bool testCollision();
     void toRenderer(SDL_Renderer *pRenderer);

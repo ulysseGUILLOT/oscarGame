@@ -9,12 +9,16 @@
 
 class Trash {
 private:
-    int posX;
-    int posY;
+    int rotationDegree;
 
     SDL_Rect collisionRect;
-    SDL_Surface* pSurface;
+    SDL_Surface* pSprite;
     SDL_Texture* pTexture;
+
+public:
+    Trash(SDL_Renderer* pRenderer);
+    ~Trash();
+    void toRender(SDL_Renderer* pRenderer);
 };
 
 

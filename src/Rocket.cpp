@@ -32,14 +32,16 @@ void Rocket::toRenderer(SDL_Renderer *pRenderer) {
     }
 }
 
-void Rocket::refreshPos() {
+bool Rocket::checkAndRefreshPos() {
     if (moving) {
         if (posY >= 0 - pSprite->h / 2)
         {
-            posY--;
+            posY = posY - 4;
+            return false;
         }else {
             moving = false;
             posY = HSCREEN / 2;
+            return true;
         }
     }
 }
