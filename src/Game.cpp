@@ -84,8 +84,10 @@ void Game::presentRenderer() {
     rocket.toRenderer(pRenderer);
 
     // affichage des déchets
-    for (auto& trash : trashes) {
-        trash.toRender(pRenderer);
+
+    for (int i = 0; i < trashes.size(); i++) {
+        std::cout << "here" << std::endl;
+        trashes[i].toRender(pRenderer);
     }
 
     // attend le temps necessaire pour obtenir 60fps
@@ -105,7 +107,7 @@ void Game::regulateFps() {
 }
 
 void Game::addTrash() {
-    Trash trash(pRenderer);
+    Trash trash;
     trashes.push_back(trash);
 }
 

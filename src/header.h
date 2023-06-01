@@ -15,5 +15,6 @@
 #include <string>
 #include <vector>
 #include <SDL.h>
+#include <cmath>
 
 #endif //OSCARGAME_HEADER_H
