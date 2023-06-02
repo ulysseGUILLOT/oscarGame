@@ -35,8 +35,7 @@ void Rocket::toRenderer(SDL_Renderer *pRenderer) {
 bool Rocket::checkAndRefreshPos() {
     if (moving) {
         if (posY >= 0 - pSprite->h / 2) {
-            // todo: gerer la vitesse de deplacement ici
-            posY = posY - 4;
+            posY = posY - ROCKET_SPEED;
             return false;
         } else {
             moving = false;

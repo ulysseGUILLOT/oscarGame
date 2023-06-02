@@ -5,6 +5,8 @@
 #ifndef OSCARGAME_ROCKET_H
 #define OSCARGAME_ROCKET_H
 
+#define ROCKET_SPEED 4
+
 #include "header.h"
 
 class Rocket {

@@ -5,6 +5,7 @@
 #include "Trash.h"
 
 Trash::Trash() {
+    // todo : initialiser le rayon de l'orbite avec + ou - 20 pixels sur la constante
     rotationAngleDegrees = -90;
 
     pSprite = SDL_LoadBMP("../src/img/trash.bmp");
