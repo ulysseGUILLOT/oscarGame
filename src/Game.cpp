@@ -60,7 +60,7 @@ void Game::initWindow() {
 }
 
 void Game::initRenderer() {
-    pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
+    pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!pRenderer) {
         std::cout << "Erreur lors de la création du rendu : " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(pWindow);

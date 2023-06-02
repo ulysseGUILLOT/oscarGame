@@ -5,8 +5,7 @@
 #include "Trash.h"
 
 Trash::Trash() {
-    rotationAngleDegrees = rand() % 360;
-
+    rotationAngleDegrees = -90;
 
     pSprite = SDL_LoadBMP("../src/img/trash.bmp");
     if (!pSprite) {
@@ -17,6 +16,7 @@ Trash::Trash() {
 void Trash::toRender(SDL_Renderer *pRenderer) {
     pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
     if (pTexture) {
+        rotationAngleDegrees = rotationAngleDegrees + TRASH_ROTATION_SPEED;
         calculateCoordFromAngle();
         SDL_Rect dest = {posX - pSprite->w / 2, posY- pSprite->h / 2, pSprite->w, pSprite->h};
         SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);

@@ -6,12 +6,13 @@
 #define OSCARGAME_TRASH_H
 
 #define TRASH_ORBIT_RADIUS 450
+#define TRASH_ROTATION_SPEED 0.4
 
 #include "header.h"
 
 class Trash {
 private:
-    int rotationAngleDegrees;
+    float rotationAngleDegrees;
     int posX;
     int posY;
 
