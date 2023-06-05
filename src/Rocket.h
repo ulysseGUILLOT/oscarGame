@@ -31,6 +31,10 @@ public:
 
     bool isMoving() const;
     void setMoving(bool moving);
+    int getPosX() const;
+    void setPosX(int posX);
+    int getPosY() const;
+    void setPosY(int posY);
 };
 
 

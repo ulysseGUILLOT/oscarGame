@@ -11,6 +11,7 @@
 
 class Game {
 private:
+    bool devMode;
     int score;
     int lifeNb;
     bool active;
@@ -54,6 +55,8 @@ public:
     SDL_Window *getPWindow() const;
     void setPWindow(SDL_Window *pWindow);
     void setLastFrameTime(Uint32 lastFrameTime);
+    void setDevMode(bool devMode);
+    bool isDevMode();
 };
 
 

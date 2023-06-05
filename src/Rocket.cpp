@@ -54,3 +54,19 @@ void Rocket::setMoving(bool moving) {
     Rocket::moving = moving;
 }
 
+int Rocket::getPosX() const {
+    return posX;
+}
+
+void Rocket::setPosX(int posX) {
+    Rocket::posX = posX;
+}
+
+int Rocket::getPosY() const {
+    return posY;
+}
+
+void Rocket::setPosY(int posY) {
+    Rocket::posY = posY;
+}
+

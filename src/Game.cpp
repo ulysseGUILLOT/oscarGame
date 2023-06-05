@@ -5,6 +5,7 @@
 #include "Game.h"
 
 Game::Game() {
+    devMode = false;
     score = 0;
     lifeNb = LIFENB;
     active = true;
@@ -51,7 +52,8 @@ void Game::initSdl() {
 }
 
 void Game::initWindow() {
-    pWindow = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_FULLSCREEN);
+    pWindow = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080,
+                               SDL_WINDOW_FULLSCREEN);
     if (!pWindow) {
         std::cout << "Erreur lors de la création de la fenêtre : " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -77,16 +79,17 @@ void Game::presentRenderer() {
     SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
 
     //Affichage du background
-    dest = {(WSCREEN / 2) - (pSurfaceEarth->w / 2), (HSCREEN / 2) - (pSurfaceEarth->h / 2), pSurfaceEarth->w, pSurfaceEarth->h};
+    dest = {(WSCREEN / 2) - (pSurfaceEarth->w / 2), (HSCREEN / 2) - (pSurfaceEarth->h / 2), pSurfaceEarth->w,
+            pSurfaceEarth->h};
     SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
 
     // affichage de la fusée
     rocket.toRenderer(pRenderer);
 
     // affichage des déchets
-
     for (int i = 0; i < trashes.size(); i++) {
         trashes[i].toRender(pRenderer);
+        trashes[i].testCollision(0, 0, pRenderer, devMode);
     }
 
     // attend le temps necessaire pour obtenir 60fps
@@ -168,4 +171,12 @@ void Game::setPWindow(SDL_Window *pWindow) {
 
 void Game::setLastFrameTime(Uint32 lastFrameTime) {
     Game::lastFrameTime = lastFrameTime;
+}
+
+void Game::setDevMode(bool devMode) {
+    Game::devMode = devMode;
+}
+
+bool Game::isDevMode() {
+    return devMode;
 }

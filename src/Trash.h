@@ -24,6 +24,7 @@ public:
     Trash();
     void toRender(SDL_Renderer* pRenderer);
     void calculateCoordFromAngle();
+    bool testCollision(int posX, int posY, SDL_Renderer* pDevRenderer, bool devMode);
 };
 
 

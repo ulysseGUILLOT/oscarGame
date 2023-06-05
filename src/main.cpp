@@ -24,6 +24,14 @@ int main(int argc, char *argv[]) {
                     case SDLK_SPACE:
                         game.getRocket().setMoving(true);
                         break;
+                    case SDLK_d:
+                        // todo : creer une texture qui sert uniquement aux dessins de collision
+                        if(game.isDevMode()) {
+                            game.setDevMode(false);
+                        } else {
+                            game.setDevMode(true);
+                        }
+                        break;
                 }
             }
         }
