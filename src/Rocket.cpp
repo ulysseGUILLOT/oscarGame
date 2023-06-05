@@ -12,11 +12,18 @@ Rocket::Rocket() {
     if (!pSprite) {
         std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
     }
+    pSurfaceCollision = SDL_LoadBMP("../src/img/rocketCollision.bmp");
+    if (!pSurfaceCollision) {
+        std::cout << "Echec de chargement du sprite de collision : " << SDL_GetError() << std::endl;
+    }
 }
 
 Rocket::~Rocket() {
     SDL_FreeSurface(pSprite);
     SDL_DestroyTexture(pTexture);
+
+    SDL_FreeSurface(pSurfaceCollision);
+    SDL_DestroyTexture(pTextureCollision);
 }
 
 void Rocket::toRenderer(SDL_Renderer *pRenderer) {

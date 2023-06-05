@@ -40,6 +40,12 @@ int main(int argc, char *argv[]) {
         if (game.getRocket().checkAndRefreshPos()) {
             // ajoute un dechet si la fusée atteint le ciel
             game.addTrash();
+        } else {
+            if (game.getLifeNb() == 0) {
+                std::cout << "Plus de vie !" << std::endl;
+            } else {
+                game.setLifeNb(game.getLifeNb()-1);
+            }
         }
 
         // affichage de la fenetre de jeu
