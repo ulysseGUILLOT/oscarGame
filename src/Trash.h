@@ -16,7 +16,6 @@ private:
     int posX;
     int posY;
 
-    SDL_Rect collisionRect;
     SDL_Surface* pSprite;
     SDL_Texture* pTexture;
 
@@ -24,7 +23,7 @@ public:
     Trash();
     void toRender(SDL_Renderer* pRenderer);
     void calculateCoordFromAngle();
-    bool testCollision(int posX, int posY, SDL_Renderer* pDevRenderer, bool devMode);
+    bool testCollision(int rocketX, int rocketY, SDL_Surface* pSurfaceCollision);
 };
 
 

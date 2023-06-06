@@ -50,7 +50,6 @@ bool Rocket::checkAndRefreshPos() {
             return true;
         }
     }
-    return false;
 }
 
 bool Rocket::isMoving() const {

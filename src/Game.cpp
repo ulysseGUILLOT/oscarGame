@@ -13,6 +13,11 @@ Game::Game() {
     initWindow();
     initRenderer();
 
+    pSurfaceCollision = SDL_CreateRGBSurface(0, WSCREEN, HSCREEN, 32, 0, 0, 0, 0);
+    if (!pSurfaceCollision) {
+        std::cout << "Echec de la création de la surface de collision : " << SDL_GetError() << std::endl;
+    }
+
     pSurfaceBackground = SDL_LoadBMP("../src/img/background.bmp");
     if (!pSurfaceBackground) {
         std::cout << "Echec de chargement du background : " << SDL_GetError() << std::endl;
@@ -78,7 +83,7 @@ void Game::presentRenderer() {
     SDL_Rect dest = {0, 0, pSurfaceBackground->w, pSurfaceBackground->h};
     SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
 
-    //Affichage du background
+    //Affichage de la terre
     dest = {(WSCREEN / 2) - (pSurfaceEarth->w / 2), (HSCREEN / 2) - (pSurfaceEarth->h / 2), pSurfaceEarth->w,
             pSurfaceEarth->h};
     SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
@@ -89,7 +94,16 @@ void Game::presentRenderer() {
     // affichage des déchets
     for (int i = 0; i < trashes.size(); i++) {
         trashes[i].toRender(pRenderer);
-        trashes[i].testCollision(0, 0, pRenderer, devMode);
+        trashes[i].testCollision(0, 0, pSurfaceCollision);
+    }
+
+    if (devMode) {
+        SDL_Texture* pTextureDev = SDL_CreateTextureFromSurface(pRenderer, pSurfaceCollision);
+        dest = {0, 0, WSCREEN, HSCREEN};
+        SDL_RenderCopy(pRenderer, pTextureDev, nullptr,&dest);
+        // nettoyage de la surface de collision après son affichage
+        SDL_FillRect(pSurfaceCollision, nullptr, SDL_MapRGB(pSurfaceCollision->format, 0, 0, 0));
+        SDL_DestroyTexture(pTextureDev);
     }
 
     // attend le temps necessaire pour obtenir 60fps

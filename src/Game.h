@@ -30,6 +30,8 @@ private:
     SDL_Surface* pSurfaceEarth;
     SDL_Texture* pTextureEarth;
 
+    SDL_Surface * pSurfaceCollision;
+
 public:
     Game();
     ~Game();

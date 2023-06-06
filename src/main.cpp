@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
                         break;
                     case SDLK_d:
                         // todo : creer une texture qui sert uniquement aux dessins de collision
-                        if(game.isDevMode()) {
+                        if (game.isDevMode()) {
                             game.setDevMode(false);
                         } else {
                             game.setDevMode(true);
@@ -40,12 +40,8 @@ int main(int argc, char *argv[]) {
         if (game.getRocket().checkAndRefreshPos()) {
             // ajoute un dechet si la fusée atteint le ciel
             game.addTrash();
-        } else {
-            if (game.getLifeNb() == 0) {
-                std::cout << "Plus de vie !" << std::endl;
-            } else {
-                game.setLifeNb(game.getLifeNb()-1);
-            }
+            game.setScore(game.getScore() + 10);
+            std::cout << "score : " << game.getScore() << std::endl;
         }
 
         // affichage de la fenetre de jeu

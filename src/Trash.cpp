@@ -35,7 +35,7 @@ void Trash::calculateCoordFromAngle() {
     posY = int(centerY + TRASH_ORBIT_RADIUS * sin(rotationAngleRadians));
 }
 
-bool Trash::testCollision(int rocketX, int rocketY, SDL_Renderer *pDevRenderer, bool devMode) {
+bool Trash::testCollision(int rocketX, int rocketY, SDL_Surface *pSurfaceCollision) {
     int trashVertexX[4];
     int trashVertexY[4];
 
@@ -51,16 +51,13 @@ bool Trash::testCollision(int rocketX, int rocketY, SDL_Renderer *pDevRenderer, 
     trashVertexX[3] = posX + (pSprite->w / 2);
     trashVertexY[3] = posY + (pSprite->h / 2);
 
-    if (devMode) {
-        for (int i = 0; i < 4; i++) {
-            int rectSize = 8;
-            int destRectX = trashVertexX[i] - rectSize / 2;
-            int destRectY = trashVertexY[i] - rectSize / 2;
+    for (int i = 0; i < 4; i++) {
+        int rectSize = 8;
+        int destRectX = trashVertexX[i] - rectSize / 2;
+        int destRectY = trashVertexY[i] - rectSize / 2;
 
-            SDL_Rect destRect = {destRectX, destRectY, rectSize, rectSize};
-            SDL_SetRenderDrawColor(pDevRenderer, 255, 0, 0, 255);
-            SDL_RenderFillRect(pDevRenderer, &destRect);
-        }
+        SDL_Rect destRect = {destRectX, destRectY, rectSize, rectSize};
+        SDL_FillRect(pSurfaceCollision, &destRect, SDL_MapRGB(pSurfaceCollision->format, 255, 0, 0));
     }
 
     return false;
