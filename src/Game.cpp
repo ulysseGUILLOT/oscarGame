@@ -89,7 +89,7 @@ void Game::presentRenderer() {
     SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
 
     // affichage de la fusée
-    rocket.toRenderer(pRenderer);
+    rocket.display(pRenderer, pSurfaceCollision);
 
     // affichage des déchets
     for (int i = 0; i < trashes.size(); i++) {

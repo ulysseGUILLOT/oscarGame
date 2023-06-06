@@ -12,8 +12,8 @@ Rocket::Rocket() {
     if (!pSprite) {
         std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
     }
-    pSurfaceCollision = SDL_LoadBMP("../src/img/rocketCollision.bmp");
-    if (!pSurfaceCollision) {
+    pSurfaceCollisionRocket = SDL_LoadBMP("../src/img/rocketCollision.bmp");
+    if (!pSurfaceCollisionRocket) {
         std::cout << "Echec de chargement du sprite de collision : " << SDL_GetError() << std::endl;
     }
 }
@@ -22,18 +22,21 @@ Rocket::~Rocket() {
     SDL_FreeSurface(pSprite);
     SDL_DestroyTexture(pTexture);
 
-    SDL_FreeSurface(pSurfaceCollision);
+    SDL_FreeSurface(pSurfaceCollisionRocket);
     SDL_DestroyTexture(pTextureCollision);
 }
 
-void Rocket::toRenderer(SDL_Renderer *pRenderer) {
+void Rocket::display(SDL_Renderer *pRenderer, SDL_Surface* pSurfaceCollision) {
     SDL_SetColorKey(pSprite, SDL_TRUE, SDL_MapRGB(pSprite->format, 0, 255, 255));
     pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
     if (pTexture) {
         SDL_Rect dest = {posX - pSprite->w / 2, posY - pSprite->h / 2, pSprite->w, pSprite->h};
         SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);
-
         SDL_DestroyTexture(pTexture);
+
+        // affichage de la hitbox de la fusée
+        SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSprite->format, 0, 255, 255));
+        SDL_BlitSurface(pSurfaceCollisionRocket, nullptr, pSurfaceCollision, &dest);
     } else {
         std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
     }

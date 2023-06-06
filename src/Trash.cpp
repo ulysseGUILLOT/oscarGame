@@ -24,7 +24,7 @@ void Trash::toRender(SDL_Renderer *pRenderer) {
     } else {
         std::cout << "Echec de la creation de la texture dechet : " << SDL_GetError() << std::endl;
     }
-
+    SDL_DestroyTexture(pTexture);
 }
 
 void Trash::calculateCoordFromAngle() {
