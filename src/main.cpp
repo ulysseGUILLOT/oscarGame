@@ -25,7 +25,6 @@ int main(int argc, char *argv[]) {
                         game.getRocket().setMoving(true);
                         break;
                     case SDLK_d:
-                        // todo : creer une texture qui sert uniquement aux dessins de collision
                         if (game.isDevMode()) {
                             game.setDevMode(false);
                         } else {
@@ -51,4 +50,20 @@ int main(int argc, char *argv[]) {
     // detruire la partie et quitter
     game.~Game();
     return 0;
+}
+
+SDL_Color getPixelColor(const SDL_Surface* pSurface, int x, int y) {
+    // Bytes per pixel
+    const Uint8 Bpp = pSurface->format->BytesPerPixel;
+
+    Uint8* pPixel = (Uint8*)pSurface->pixels + y * pSurface->pitch + x * Bpp;
+
+    Uint32 PixelData = *(Uint32*)pPixel;
+
+    SDL_Color Color = { 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE };
+
+    // Retrieve the RGB values of the specific pixel
+    SDL_GetRGB(PixelData, pSurface->format, &Color.r, &Color.g, &Color.b);
+
+    return Color;
 }

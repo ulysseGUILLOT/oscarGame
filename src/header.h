@@ -17,4 +17,7 @@
 #include <SDL.h>
 #include <cmath>
 
+// proto :
+SDL_Color getPixelColor(const SDL_Surface* pSurface, int x, int y);
+
 #endif //OSCARGAME_HEADER_H

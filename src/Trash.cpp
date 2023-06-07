@@ -51,6 +51,19 @@ bool Trash::testCollision(int rocketX, int rocketY, SDL_Surface *pSurfaceCollisi
     trashVertexX[3] = posX + (pSprite->w / 2);
     trashVertexY[3] = posY + (pSprite->h / 2);
 
+    /*
+     * Boucle de test de collision :
+     * Obtention de la couleur du pixel sour les 4 sommets du carré du dechet
+     * si la couleur est "verte" alors il y a une colision entre le dechet et la fusée
+     */
+    for (int i = 0; i < 4; i++) {
+        SDL_Color color = getPixelColor(pSurfaceCollision, trashVertexX[i], trashVertexY[i]);
+        //std::cout << "r:" << color.r << " g:" << color.g << " b:" << color.b << std::endl;
+        if (color.r == 0 && color.g == 255 && color.b == 0) {
+            std::cout << "collision" << std::endl;
+        }
+    }
+
     for (int i = 0; i < 4; i++) {
         int rectSize = 8;
         int destRectX = trashVertexX[i] - rectSize / 2;

@@ -97,14 +97,16 @@ void Game::presentRenderer() {
         trashes[i].testCollision(0, 0, pSurfaceCollision);
     }
 
+    // si dev mode : affichage de la surface de la collision
     if (devMode) {
         SDL_Texture* pTextureDev = SDL_CreateTextureFromSurface(pRenderer, pSurfaceCollision);
         dest = {0, 0, WSCREEN, HSCREEN};
         SDL_RenderCopy(pRenderer, pTextureDev, nullptr,&dest);
-        // nettoyage de la surface de collision après son affichage
-        SDL_FillRect(pSurfaceCollision, nullptr, SDL_MapRGB(pSurfaceCollision->format, 0, 0, 0));
         SDL_DestroyTexture(pTextureDev);
     }
+
+    // nettoyage de la surface de collision
+    SDL_FillRect(pSurfaceCollision, nullptr, SDL_MapRGB(pSurfaceCollision->format, 0, 0, 0));
 
     // attend le temps necessaire pour obtenir 60fps
     regulateFps();
