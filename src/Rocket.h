@@ -15,25 +15,35 @@ private:
     int posY;
     bool moving;
 
-    SDL_Surface* pSprite;
-    SDL_Texture* pTexture;
+    SDL_Surface *pSprite;
+    SDL_Texture *pTexture;
 
-    SDL_Surface* pSurfaceCollisionRocket;
-    SDL_Texture* pTextureCollision;
+    SDL_Surface *pSurfaceCollisionRocket;
+    SDL_Texture *pTextureCollision;
 
 public:
     Rocket();
+
     ~Rocket();
+
     bool checkAndRefreshPos();
+
     void reset();
+
     bool testCollision();
-    void display(SDL_Renderer *pRenderer, SDL_Surface* pSurfaceCollision);
+
+    void display(SDL_Renderer *pRenderer, SDL_Surface *pSurfaceCollision);
 
     bool isMoving() const;
+
     void setMoving(bool moving);
+
     int getPosX() const;
+
     void setPosX(int posX);
+
     int getPosY() const;
+
     void setPosY(int posY);
 };
 

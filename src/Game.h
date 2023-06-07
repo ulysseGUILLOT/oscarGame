@@ -18,46 +18,69 @@ private:
 
     Uint32 lastFrameTime;
 
-    std::vector <Trash> trashes;
+    std::vector<Trash> trashes;
     Rocket rocket;
 
-    SDL_Window* pWindow;
-    SDL_Renderer* pRenderer;
+    SDL_Window *pWindow;
+    SDL_Renderer *pRenderer;
 
-    SDL_Surface* pSurfaceBackground;
-    SDL_Texture* pTextureBackground;
+    SDL_Surface *pSurfaceBackground;
+    SDL_Texture *pTextureBackground;
 
-    SDL_Surface* pSurfaceEarth;
-    SDL_Texture* pTextureEarth;
+    SDL_Surface *pSurfaceEarth;
+    SDL_Texture *pTextureEarth;
 
-    SDL_Surface * pSurfaceCollision;
+    SDL_Surface *pSurfaceCollision;
 
 public:
     Game();
+
     ~Game();
+
     void initSdl();
+
     void initWindow();
+
     void initRenderer();
+
     void presentRenderer();
+
     void regulateFps();
+
     void addTrash();
 
-    SDL_Renderer* getPRenderer() const;
+    SDL_Renderer *getPRenderer() const;
+
     void setPRenderer(SDL_Renderer *pRenderer);
+
     int getScore() const;
+
     void setScore(int score);
+
     int getLifeNb() const;
+
     void setLifeNb(int lifeNb);
+
     bool isActive() const;
+
     void setActive(bool active);
+
     std::vector<Trash> &getTrashes();
+
     void setTrashes(const std::vector<Trash> &trashes);
+
     Rocket &getRocket();
+
     void setRocket(const Rocket &rocket);
+
     SDL_Window *getPWindow() const;
+
     void setPWindow(SDL_Window *pWindow);
+
     void setLastFrameTime(Uint32 lastFrameTime);
+
     void setDevMode(bool devMode);
+
     bool isDevMode();
 };
 

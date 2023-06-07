@@ -16,14 +16,17 @@ private:
     int posX;
     int posY;
 
-    SDL_Surface* pSprite;
-    SDL_Texture* pTexture;
+    SDL_Surface *pSprite;
+    SDL_Texture *pTexture;
 
 public:
     Trash();
-    void toRender(SDL_Renderer* pRenderer);
+
+    void toRender(SDL_Renderer *pRenderer);
+
     void calculateCoordFromAngle();
-    bool testCollision(int rocketX, int rocketY, SDL_Surface* pSurfaceCollision);
+
+    bool testCollision(int rocketX, int rocketY, SDL_Surface *pSurfaceCollision);
 };
 
 
