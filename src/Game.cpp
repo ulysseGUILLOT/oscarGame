@@ -13,30 +13,30 @@ Game::Game() {
     initWindow();
     initRenderer();
 
-    pSurfaceCollision = SDL_CreateRGBSurface(0, WSCREEN, HSCREEN, 32, 0, 0, 0, 0);
-    if (!pSurfaceCollision) {
-        std::cout << "Echec de la création de la surface de collision : " << SDL_GetError() << std::endl;
-    }
-
     pSurfaceBackground = SDL_LoadBMP("../src/img/background.bmp");
     if (!pSurfaceBackground) {
-        std::cout << "Echec de chargement du background : " << SDL_GetError() << std::endl;
+        std::cout << "Echec de chargement de l'image background : " << SDL_GetError() << std::endl;
     }
     pTextureBackground = SDL_CreateTextureFromSurface(pRenderer, pSurfaceBackground);
     if (!pTextureBackground) {
-        std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+        std::cout << "Echec de la creation de la texture du background : " << SDL_GetError() << std::endl;
         active = false;
     }
 
     pSurfaceEarth = SDL_LoadBMP("../src/img/earth.bmp");
     if (!pSurfaceEarth) {
-        std::cout << "Echec de chargement du background : " << SDL_GetError() << std::endl;
+        std::cout << "Echec de chargement de l'image de la terre : " << SDL_GetError() << std::endl;
     }
     SDL_SetColorKey(pSurfaceEarth, SDL_TRUE, SDL_MapRGB(pSurfaceEarth->format, 0, 255, 255));
     pTextureEarth = SDL_CreateTextureFromSurface(pRenderer, pSurfaceEarth);
     if (!pTextureEarth) {
-        std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+        std::cout << "Echec de la creation de la texture de la terre : " << SDL_GetError() << std::endl;
         active = false;
+    }
+
+    pSurfaceCollision = SDL_CreateRGBSurface(0, WSCREEN, HSCREEN, 32, 0, 0, 0, 0);
+    if (!pSurfaceCollision) {
+        std::cout << "Echec de la création de la surface de collision : " << SDL_GetError() << std::endl;
     }
 }
 
