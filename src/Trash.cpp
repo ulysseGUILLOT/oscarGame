@@ -61,6 +61,7 @@ bool Trash::testCollision(int rocketX, int rocketY, SDL_Surface *pSurfaceCollisi
         //std::cout << "r:" << color.r << " g:" << color.g << " b:" << color.b << std::endl;
         if (color.r == 0 && color.g == 255 && color.b == 0) {
             std::cout << "collision" << std::endl;
+            return true;
         }
     }
 

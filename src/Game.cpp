@@ -91,17 +91,29 @@ void Game::presentRenderer() {
     // affichage de la fusée
     rocket.display(pRenderer, pSurfaceCollision);
 
-    // affichage des déchets
+    // affichage des déchets et test de collision avec la fusée
     for (int i = 0; i < trashes.size(); i++) {
+        bool collision = false;
         trashes[i].toRender(pRenderer);
-        trashes[i].testCollision(0, 0, pSurfaceCollision);
+        collision = trashes[i].testCollision(0, 0, pSurfaceCollision);
+        if (collision) {
+            rocket.reset();
+            if (lifeNb > 0) {
+                lifeNb--;
+            } else {
+                // todo : créer un attribut indiquant la fin du jeu qui ne ferme pas la fenêtre, puis afficher un écran de défaite
+                std::cout << "fin de la partie" << std::endl;
+                SDL_Delay(3000);
+                active = false;
+            }
+        }
     }
 
     // si dev mode : affichage de la surface de la collision
     if (devMode) {
-        SDL_Texture* pTextureDev = SDL_CreateTextureFromSurface(pRenderer, pSurfaceCollision);
+        SDL_Texture *pTextureDev = SDL_CreateTextureFromSurface(pRenderer, pSurfaceCollision);
         dest = {0, 0, WSCREEN, HSCREEN};
-        SDL_RenderCopy(pRenderer, pTextureDev, nullptr,&dest);
+        SDL_RenderCopy(pRenderer, pTextureDev, nullptr, &dest);
         SDL_DestroyTexture(pTextureDev);
     }
 

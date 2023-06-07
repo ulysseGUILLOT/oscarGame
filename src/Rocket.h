@@ -30,8 +30,6 @@ public:
 
     void reset();
 
-    bool testCollision();
-
     void display(SDL_Renderer *pRenderer, SDL_Surface *pSurfaceCollision);
 
     bool isMoving() const;

@@ -79,3 +79,8 @@ void Rocket::setPosY(int posY) {
     Rocket::posY = posY;
 }
 
+void Rocket::reset() {
+    posY = HSCREEN / 2;
+    moving = false;
+}
+
