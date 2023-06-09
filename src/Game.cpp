@@ -45,7 +45,7 @@ Game::Game() {
         active = false;
     }
 
-    pSurfaceEmptyHeart = SDL_LoadBMP("../src/img/fullHeart.bmp");
+    pSurfaceEmptyHeart = SDL_LoadBMP("../src/img/emptyHeart.bmp");
     if (!pSurfaceEmptyHeart) {
         std::cout << "Echec de chargement de l'image du coeur vide : " << SDL_GetError() << std::endl;
     }
@@ -161,9 +161,14 @@ void Game::addTrash() {
 }
 
 void Game::displayHearts() {
-    for (int i = 0; i < lifeNb; i++) {
+    for (int i = 0; i < 3; i++) {
         SDL_Rect dest = {WSCREEN - 300 + i * 75, 50, pSurfaceFullHeart->w, pSurfaceFullHeart->h};
-        SDL_RenderCopy(pRenderer, pTextureFullHeart, nullptr, &dest);
+
+        if (lifeNb - i > 0) {
+            SDL_RenderCopy(pRenderer, pTextureFullHeart, nullptr, &dest);
+        } else {
+            SDL_RenderCopy(pRenderer, pTextureEmptyHeart, nullptr, &dest);
+        }
     }
 }
 
