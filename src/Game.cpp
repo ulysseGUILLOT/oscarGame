@@ -22,6 +22,7 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture du background : " << SDL_GetError() << std::endl;
         active = false;
     }
+    SDL_FreeSurface(pSurfaceBackground);
 
     pSurfaceEarth = SDL_LoadBMP("../src/img/earth.bmp");
     if (!pSurfaceEarth) {
@@ -33,10 +34,36 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture de la terre : " << SDL_GetError() << std::endl;
         active = false;
     }
+    SDL_FreeSurface(pSurfaceEarth);
+
+    pSurfaceFullHeart = SDL_LoadBMP("../src/img/fullHeart.bmp");
+    if (!pSurfaceFullHeart) {
+        std::cout << "Echec de chargement de l'image du coeur rempli : " << SDL_GetError() << std::endl;
+    }
+    SDL_SetColorKey(pSurfaceFullHeart, SDL_TRUE, SDL_MapRGB(pSurfaceFullHeart->format, 0, 255, 255));
+    pTextureFullHeart = SDL_CreateTextureFromSurface(pRenderer, pSurfaceFullHeart);
+    if (!pTextureFullHeart) {
+        std::cout << "Echec de la creation de la texture du coeur rempli : " << SDL_GetError() << std::endl;
+        active = false;
+    }
+    SDL_FreeSurface(pSurfaceFullHeart);
+
+    pSurfaceEmptyHeart = SDL_LoadBMP("../src/img/fullHeart.bmp");
+    if (!pSurfaceEmptyHeart) {
+        std::cout << "Echec de chargement de l'image du coeur vide : " << SDL_GetError() << std::endl;
+    }
+    SDL_SetColorKey(pSurfaceEmptyHeart, SDL_TRUE, SDL_MapRGB(pSurfaceEmptyHeart->format, 0, 255, 255));
+    pTextureEmptyHeart = SDL_CreateTextureFromSurface(pRenderer, pSurfaceEmptyHeart);
+    if (!pTextureEmptyHeart) {
+        std::cout << "Echec de la creation de la texture du coeur vide : " << SDL_GetError() << std::endl;
+        active = false;
+    }
+    SDL_FreeSurface(pSurfaceEmptyHeart);
 
     pSurfaceCollision = SDL_CreateRGBSurface(0, WSCREEN, HSCREEN, 32, 0, 0, 0, 0);
     if (!pSurfaceCollision) {
         std::cout << "Echec de la création de la surface de collision : " << SDL_GetError() << std::endl;
+        active = false;
     }
 }
 
@@ -44,6 +71,8 @@ Game::~Game() {
     rocket.~Rocket();
     SDL_DestroyTexture(pTextureBackground);
     SDL_DestroyTexture(pTextureEarth);
+    SDL_DestroyTexture(pTextureFullHeart);
+    SDL_DestroyTexture(pTextureEmptyHeart);
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
@@ -80,7 +109,7 @@ void Game::presentRenderer() {
     SDL_RenderClear(pRenderer);
 
     //Affichage du background
-    SDL_Rect dest = {0, 0, pSurfaceBackground->w, pSurfaceBackground->h};
+    SDL_Rect dest = {0, 0, WSCREEN, HSCREEN};
     SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
 
     //Affichage de la terre

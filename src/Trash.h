@@ -16,11 +16,13 @@ private:
     int posX;
     int posY;
 
-    SDL_Surface *pSprite;
-    SDL_Texture *pTexture;
+    SDL_Surface *pSurfaceTrash;
+    SDL_Texture *pTextureTrash;
 
 public:
     Trash();
+
+    ~Trash();
 
     void toRender(SDL_Renderer *pRenderer);
 

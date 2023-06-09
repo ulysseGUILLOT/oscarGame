@@ -8,8 +8,8 @@ Rocket::Rocket() {
     posX = WSCREEN / 2;
     posY = HSCREEN / 2;
     moving = false;
-    pSprite = SDL_LoadBMP("../src/img/rocket.bmp");
-    if (!pSprite) {
+    pSurfaceRocket = SDL_LoadBMP("../src/img/rocket.bmp");
+    if (!pSurfaceRocket) {
         std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
     }
     pSurfaceCollisionRocket = SDL_LoadBMP("../src/img/rocketCollision.bmp");
@@ -19,23 +19,20 @@ Rocket::Rocket() {
 }
 
 Rocket::~Rocket() {
-    SDL_FreeSurface(pSprite);
-    SDL_DestroyTexture(pTexture);
-
+    SDL_FreeSurface(pSurfaceRocket);
     SDL_FreeSurface(pSurfaceCollisionRocket);
-    SDL_DestroyTexture(pTextureCollision);
 }
 
 void Rocket::display(SDL_Renderer *pRenderer, SDL_Surface* pSurfaceCollision) {
-    SDL_SetColorKey(pSprite, SDL_TRUE, SDL_MapRGB(pSprite->format, 0, 255, 255));
-    pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
-    if (pTexture) {
-        SDL_Rect dest = {posX - pSprite->w / 2, posY - pSprite->h / 2, pSprite->w, pSprite->h};
-        SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);
-        SDL_DestroyTexture(pTexture);
+    SDL_SetColorKey(pSurfaceRocket, SDL_TRUE, SDL_MapRGB(pSurfaceRocket->format, 0, 255, 255));
+    pTextureRocket = SDL_CreateTextureFromSurface(pRenderer, pSurfaceRocket);
+    if (pTextureRocket) {
+        SDL_Rect dest = {posX - pSurfaceRocket->w / 2, posY - pSurfaceRocket->h / 2, pSurfaceRocket->w, pSurfaceRocket->h};
+        SDL_RenderCopy(pRenderer, pTextureRocket, NULL, &dest);
+        SDL_DestroyTexture(pTextureRocket);
 
         // affichage de la hitbox de la fusée
-        SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSprite->format, 0, 255, 255));
+        SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSurfaceCollisionRocket->format, 0, 255, 255));
         SDL_BlitSurface(pSurfaceCollisionRocket, nullptr, pSurfaceCollision, &dest);
     } else {
         std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
@@ -44,7 +41,7 @@ void Rocket::display(SDL_Renderer *pRenderer, SDL_Surface* pSurfaceCollision) {
 
 bool Rocket::checkAndRefreshPos() {
     if (moving) {
-        if (posY >= 0 - pSprite->h / 2) {
+        if (posY >= 0 - pSurfaceRocket->h / 2) {
             posY = posY - ROCKET_SPEED;
             return false;
         } else {

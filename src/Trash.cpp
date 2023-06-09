@@ -8,23 +8,27 @@ Trash::Trash() {
     // todo : initialiser le rayon de l'orbite avec + ou - 20 pixels sur la constante
     rotationAngleDegrees = -90;
 
-    pSprite = SDL_LoadBMP("../src/img/trash.bmp");
-    if (!pSprite) {
+    pSurfaceTrash = SDL_LoadBMP("../src/img/trash.bmp");
+    if (!pSurfaceTrash) {
         std::cout << "Echec de chargement de l'image dechet : " << SDL_GetError() << std::endl;
     }
 }
 
+Trash::~Trash() {
+    SDL_FreeSurface(pSurfaceTrash);
+}
+
 void Trash::toRender(SDL_Renderer *pRenderer) {
-    pTexture = SDL_CreateTextureFromSurface(pRenderer, pSprite);
-    if (pTexture) {
+    pTextureTrash = SDL_CreateTextureFromSurface(pRenderer, pSurfaceTrash);
+    if (pTextureTrash) {
         rotationAngleDegrees = rotationAngleDegrees + TRASH_ROTATION_SPEED;
         calculateCoordFromAngle();
-        SDL_Rect dest = {posX - pSprite->w / 2, posY - pSprite->h / 2, pSprite->w, pSprite->h};
-        SDL_RenderCopy(pRenderer, pTexture, NULL, &dest);
+        SDL_Rect dest = {posX - pSurfaceTrash->w / 2, posY - pSurfaceTrash->h / 2, pSurfaceTrash->w, pSurfaceTrash->h};
+        SDL_RenderCopy(pRenderer, pTextureTrash, NULL, &dest);
     } else {
         std::cout << "Echec de la creation de la texture dechet : " << SDL_GetError() << std::endl;
     }
-    SDL_DestroyTexture(pTexture);
+    SDL_DestroyTexture(pTextureTrash);
 }
 
 void Trash::calculateCoordFromAngle() {
@@ -39,17 +43,17 @@ bool Trash::testCollision(int rocketX, int rocketY, SDL_Surface *pSurfaceCollisi
     int trashVertexX[4];
     int trashVertexY[4];
 
-    trashVertexX[0] = posX - (pSprite->w / 2);
-    trashVertexY[0] = posY - (pSprite->h / 2);
+    trashVertexX[0] = posX - (pSurfaceTrash->w / 2);
+    trashVertexY[0] = posY - (pSurfaceTrash->h / 2);
 
-    trashVertexX[1] = posX + (pSprite->w / 2);
-    trashVertexY[1] = posY - (pSprite->h / 2);
+    trashVertexX[1] = posX + (pSurfaceTrash->w / 2);
+    trashVertexY[1] = posY - (pSurfaceTrash->h / 2);
 
-    trashVertexX[2] = posX - (pSprite->w / 2);
-    trashVertexY[2] = posY + (pSprite->h / 2);
+    trashVertexX[2] = posX - (pSurfaceTrash->w / 2);
+    trashVertexY[2] = posY + (pSurfaceTrash->h / 2);
 
-    trashVertexX[3] = posX + (pSprite->w / 2);
-    trashVertexY[3] = posY + (pSprite->h / 2);
+    trashVertexX[3] = posX + (pSurfaceTrash->w / 2);
+    trashVertexY[3] = posY + (pSurfaceTrash->h / 2);
 
     /*
      * Boucle de test de collision :

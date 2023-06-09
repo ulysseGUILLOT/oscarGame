@@ -15,11 +15,10 @@ private:
     int posY;
     bool moving;
 
-    SDL_Surface *pSprite;
-    SDL_Texture *pTexture;
+    SDL_Surface *pSurfaceRocket;
+    SDL_Texture *pTextureRocket;
 
     SDL_Surface *pSurfaceCollisionRocket;
-    SDL_Texture *pTextureCollision;
 
 public:
     Rocket();

@@ -30,6 +30,12 @@ private:
     SDL_Surface *pSurfaceEarth;
     SDL_Texture *pTextureEarth;
 
+    SDL_Surface *pSurfaceFullHeart;
+    SDL_Texture *pTextureFullHeart;
+
+    SDL_Surface *pSurfaceEmptyHeart;
+    SDL_Texture *pTextureEmptyHeart;
+
     SDL_Surface *pSurfaceCollision;
 
 public:
