@@ -15,7 +15,7 @@ Trash::Trash() {
 }
 
 Trash::~Trash() {
-    SDL_FreeSurface(pSurfaceTrash);
+    //SDL_FreeSurface(pSurfaceTrash);
 }
 
 void Trash::toRender(SDL_Renderer *pRenderer) {

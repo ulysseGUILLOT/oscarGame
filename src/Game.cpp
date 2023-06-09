@@ -22,7 +22,6 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture du background : " << SDL_GetError() << std::endl;
         active = false;
     }
-    SDL_FreeSurface(pSurfaceBackground);
 
     pSurfaceEarth = SDL_LoadBMP("../src/img/earth.bmp");
     if (!pSurfaceEarth) {
@@ -34,7 +33,6 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture de la terre : " << SDL_GetError() << std::endl;
         active = false;
     }
-    SDL_FreeSurface(pSurfaceEarth);
 
     pSurfaceFullHeart = SDL_LoadBMP("../src/img/fullHeart.bmp");
     if (!pSurfaceFullHeart) {
@@ -46,7 +44,6 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture du coeur rempli : " << SDL_GetError() << std::endl;
         active = false;
     }
-    SDL_FreeSurface(pSurfaceFullHeart);
 
     pSurfaceEmptyHeart = SDL_LoadBMP("../src/img/fullHeart.bmp");
     if (!pSurfaceEmptyHeart) {
@@ -58,7 +55,6 @@ Game::Game() {
         std::cout << "Echec de la creation de la texture du coeur vide : " << SDL_GetError() << std::endl;
         active = false;
     }
-    SDL_FreeSurface(pSurfaceEmptyHeart);
 
     pSurfaceCollision = SDL_CreateRGBSurface(0, WSCREEN, HSCREEN, 32, 0, 0, 0, 0);
     if (!pSurfaceCollision) {
@@ -127,7 +123,7 @@ void Game::presentRenderer() {
         collision = trashes[i].testCollision(0, 0, pSurfaceCollision);
         if (collision) {
             rocket.reset();
-            if (lifeNb > 0) {
+            if (lifeNb > 1) {
                 lifeNb--;
             } else {
                 // todo : créer un attribut indiquant la fin du jeu qui ne ferme pas la fenêtre, puis afficher un écran de défaite
@@ -137,6 +133,9 @@ void Game::presentRenderer() {
             }
         }
     }
+
+    // affichage des vies
+    displayHearts();
 
     // si dev mode : affichage de la surface de la collision
     if (devMode) {
@@ -156,6 +155,18 @@ void Game::presentRenderer() {
     SDL_RenderPresent(pRenderer);
 }
 
+void Game::addTrash() {
+    Trash trash;
+    trashes.push_back(trash);
+}
+
+void Game::displayHearts() {
+    for (int i = 0; i < lifeNb; i++) {
+        SDL_Rect dest = {WSCREEN - 300 + i * 75, 50, pSurfaceFullHeart->w, pSurfaceFullHeart->h};
+        SDL_RenderCopy(pRenderer, pTextureFullHeart, nullptr, &dest);
+    }
+}
+
 void Game::regulateFps() {
     Uint32 targetFrameTime = 1000 / FPS; // obtention du temps d'une frame en ms
     Uint32 elapsedFrameTime = SDL_GetTicks() - lastFrameTime;
@@ -163,11 +174,6 @@ void Game::regulateFps() {
     if (elapsedFrameTime < targetFrameTime) {
         SDL_Delay(targetFrameTime - elapsedFrameTime);
     }
-}
-
-void Game::addTrash() {
-    Trash trash;
-    trashes.push_back(trash);
 }
 
 SDL_Renderer *Game::getPRenderer() const {

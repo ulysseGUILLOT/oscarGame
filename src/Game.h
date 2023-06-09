@@ -51,9 +51,11 @@ public:
 
     void presentRenderer();
 
-    void regulateFps();
-
     void addTrash();
+
+    void displayHearts();
+
+    void regulateFps();
 
     SDL_Renderer *getPRenderer() const;
 
