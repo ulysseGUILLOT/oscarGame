@@ -39,6 +39,7 @@ private:
     SDL_Surface *pSurfaceCollision;
 
     TTF_Font *pFont;
+    SDL_Surface *pSurfaceTextScore;
 
 public:
     Game();

@@ -23,4 +23,5 @@ set(SOURCES src/main.cpp src/Trash.h src/header.h src/Game.cpp src/Game.h src/Tr
 add_executable(oscarGame ${SOURCES})
 
 # Lier les bibliothèques SDL2 à l'exécutable
-target_link_libraries(oscarGame ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+set(SDL2_TTF_LIBRARY "C:/libC++/SDL2_ttf/lib/x86/SDL2_ttf.lib")
+target_link_libraries(oscarGame ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARY})

@@ -61,6 +61,11 @@ Game::Game() {
         std::cout << "Echec de la création de la surface de collision : " << SDL_GetError() << std::endl;
         active = false;
     }
+
+    pFont = TTF_OpenFont("../src/font/Play-Bold.ttf", 20);
+    if (!pFont) {
+        std::cout << "Echec du chargement de la police d'ecriture: " << TTF_GetError() << std::endl;
+    }
 }
 
 Game::~Game() {
