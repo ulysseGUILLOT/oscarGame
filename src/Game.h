@@ -38,6 +38,8 @@ private:
 
     SDL_Surface *pSurfaceCollision;
 
+    TTF_Font *pFont;
+
 public:
     Game();
 
