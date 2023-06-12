@@ -62,7 +62,7 @@ Game::Game() {
         active = false;
     }
 
-    pFont = TTF_OpenFont("../src/font/Play-Bold.ttf", 20);
+    pFont = TTF_OpenFont("../src/font/Play-Bold.ttf", 40);
     if (!pFont) {
         std::cout << "Echec du chargement de la police d'ecriture: " << TTF_GetError() << std::endl;
     }
@@ -75,6 +75,7 @@ Game::~Game() {
     SDL_DestroyTexture(pTextureFullHeart);
     SDL_DestroyTexture(pTextureEmptyHeart);
     SDL_DestroyRenderer(pRenderer);
+    TTF_CloseFont(pFont);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
 }
@@ -142,6 +143,9 @@ void Game::presentRenderer() {
     // affichage des vies
     displayHearts();
 
+    // affichage du score
+    displayScore();
+
     // si dev mode : affichage de la surface de la collision
     if (devMode) {
         SDL_Texture *pTextureDev = SDL_CreateTextureFromSurface(pRenderer, pSurfaceCollision);
@@ -175,6 +179,23 @@ void Game::displayHearts() {
             SDL_RenderCopy(pRenderer, pTextureEmptyHeart, nullptr, &dest);
         }
     }
+}
+
+void Game::displayScore() {
+    SDL_Color textColor = {255, 255, 255};
+    std::string stringScore = std::to_string(score);
+    pSurfaceTextScore = TTF_RenderText_Solid(pFont, stringScore.c_str(), textColor);
+    if (!pSurfaceTextScore) {
+        std::cout << "Erreur lors de la création de la surface de score : " << SDL_GetError() << std::endl;
+    }
+    pTextureTextScore = SDL_CreateTextureFromSurface(pRenderer, pSurfaceTextScore);
+    if (!pTextureTextScore) {
+        std::cout << "Erreur lors de la création du rendu de score : " << SDL_GetError() << std::endl;
+    }
+    SDL_Rect destRect = {50, 50, pSurfaceTextScore->w, pSurfaceTextScore->h};
+    SDL_RenderCopy(pRenderer, pTextureTextScore, nullptr, &destRect);
+    SDL_FreeSurface(pSurfaceTextScore);
+    SDL_DestroyTexture(pTextureTextScore);
 }
 
 void Game::regulateFps() {

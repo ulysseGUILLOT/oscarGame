@@ -3,6 +3,7 @@
 
 int main(int argc, char *argv[]) {
     srand(time(nullptr));
+    TTF_Init();
 
     // initialisation de la partie
     Game game;

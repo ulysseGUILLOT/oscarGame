@@ -40,6 +40,7 @@ private:
 
     TTF_Font *pFont;
     SDL_Surface *pSurfaceTextScore;
+    SDL_Texture *pTextureTextScore;
 
 public:
     Game();
@@ -57,6 +58,8 @@ public:
     void addTrash();
 
     void displayHearts();
+
+    void displayScore();
 
     void regulateFps();
 
