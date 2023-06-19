@@ -62,7 +62,7 @@ Game::Game() {
         active = false;
     }
 
-    pFont = TTF_OpenFont("../src/font/Play-Bold.ttf", 40);
+    pFont = TTF_OpenFont("../src/font/Rocgrotesk-compressed-bold.ttf", 50);
     if (!pFont) {
         std::cout << "Echec du chargement de la police d'ecriture: " << TTF_GetError() << std::endl;
     }
@@ -183,7 +183,7 @@ void Game::displayHearts() {
 
 void Game::displayScore() {
     SDL_Color textColor = {255, 255, 255};
-    std::string stringScore = std::to_string(score);
+    std::string stringScore = "Score : " + std::to_string(score);
     pSurfaceTextScore = TTF_RenderText_Solid(pFont, stringScore.c_str(), textColor);
     if (!pSurfaceTextScore) {
         std::cout << "Erreur lors de la création de la surface de score : " << SDL_GetError() << std::endl;

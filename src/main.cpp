@@ -41,7 +41,6 @@ int main(int argc, char *argv[]) {
             // ajoute un dechet si la fusée atteint le ciel
             game.addTrash();
             game.setScore(game.getScore() + 10);
-            std::cout << "score : " << game.getScore() << std::endl;
         }
 
         // affichage de la fenetre de jeu
