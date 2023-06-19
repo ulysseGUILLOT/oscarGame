@@ -2,4 +2,5 @@
 cmake-build-debug
 !cmake-build-debug/SDL2.dll
 !cmake-build-debug/SDL2_ttf.dll
+!cmake-build-debug/SDL2_mixer.dll
 !cmake-build-debug/oscarGame.exe

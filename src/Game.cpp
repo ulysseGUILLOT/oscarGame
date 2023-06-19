@@ -66,6 +66,13 @@ Game::Game() {
     if (!pFont) {
         std::cout << "Echec du chargement de la police d'ecriture: " << TTF_GetError() << std::endl;
     }
+
+    pChunkMusic = loadChunk("../src/sound/music.wav");
+    pChunkLaunch = loadChunk("../src/sound/launch.wav");
+    pChunkCollision = loadChunk("../src/sound/collision.wav");
+
+    // lancement de la musique de fond en boucle
+    playChunk(pChunkMusic, -1);
 }
 
 Game::~Game() {
@@ -128,6 +135,7 @@ void Game::presentRenderer() {
         trashes[i].toRender(pRenderer);
         collision = trashes[i].testCollision(0, 0, pSurfaceCollision);
         if (collision) {
+            playChunk(pChunkCollision, 0);
             rocket.reset();
             if (lifeNb > 1) {
                 lifeNb--;
@@ -207,6 +215,21 @@ void Game::regulateFps() {
     }
 }
 
+Mix_Chunk *Game::loadChunk(const char *path) {
+    Mix_Chunk* pSound;
+    pSound = Mix_LoadWAV(path);
+    if (pSound == NULL)
+    {
+        std::cout << "Erreur lors du chargement de l'effet sonore : " << Mix_GetError() << std::endl;
+        SDL_Quit();
+    }
+    return pSound;
+}
+
+void Game::playChunk(Mix_Chunk *pSound, int loop) {
+    Mix_PlayChannel(-1, pSound, loop); // lecture de l'effet sonore
+}
+
 SDL_Renderer *Game::getPRenderer() const {
     return pRenderer;
 }
@@ -273,4 +296,28 @@ void Game::setDevMode(bool devMode) {
 
 bool Game::isDevMode() {
     return devMode;
+}
+
+Mix_Chunk *Game::getPChunkMusic() const {
+    return pChunkMusic;
+}
+
+void Game::setPChunkMusic(Mix_Chunk *pChunkMusic) {
+    Game::pChunkMusic = pChunkMusic;
+}
+
+Mix_Chunk *Game::getPChunkLaunch() const {
+    return pChunkLaunch;
+}
+
+void Game::setPChunkLaunch(Mix_Chunk *pChunkLaunch) {
+    Game::pChunkLaunch = pChunkLaunch;
+}
+
+Mix_Chunk *Game::getPChunkCollision() const {
+    return pChunkCollision;
+}
+
+void Game::setPChunkCollision(Mix_Chunk *pChunkCollision) {
+    Game::pChunkCollision = pChunkCollision;
 }

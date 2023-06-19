@@ -42,6 +42,10 @@ private:
     SDL_Surface *pSurfaceTextScore;
     SDL_Texture *pTextureTextScore;
 
+    Mix_Chunk *pChunkMusic;
+    Mix_Chunk *pChunkLaunch;
+    Mix_Chunk *pChunkCollision;
+
 public:
     Game();
 
@@ -62,6 +66,10 @@ public:
     void displayScore();
 
     void regulateFps();
+
+    Mix_Chunk *loadChunk(const char *path);
+
+    void playChunk(Mix_Chunk *pSound, int loop);
 
     SDL_Renderer *getPRenderer() const;
 
@@ -96,6 +104,18 @@ public:
     void setDevMode(bool devMode);
 
     bool isDevMode();
+
+    Mix_Chunk *getPChunkMusic() const;
+
+    void setPChunkMusic(Mix_Chunk *pChunkMusic);
+
+    Mix_Chunk *getPChunkLaunch() const;
+
+    void setPChunkLaunch(Mix_Chunk *pChunkLaunch);
+
+    Mix_Chunk *getPChunkCollision() const;
+
+    void setPChunkCollision(Mix_Chunk *pChunkCollision);
 };
 
 

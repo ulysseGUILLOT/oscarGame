@@ -4,6 +4,14 @@
 int main(int argc, char *argv[]) {
     srand(time(nullptr));
     TTF_Init();
+    //Mix_Init(MIX_INIT_FLAC);
+
+    // ouverture de l'audio
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        std::cout << "Erreur lors de l'initialisation de l'audio : " << Mix_GetError() << std::endl;
+        SDL_Quit();
+    }
 
     // initialisation de la partie
     Game game;
@@ -23,6 +31,10 @@ int main(int argc, char *argv[]) {
                         game.setActive(false);
                         break;
                     case SDLK_SPACE:
+                        if (!game.getRocket().isMoving())
+                        {
+                            game.playChunk(game.getPChunkLaunch(), 0);
+                        }
                         game.getRocket().setMoving(true);
                         break;
                     case SDLK_d:
