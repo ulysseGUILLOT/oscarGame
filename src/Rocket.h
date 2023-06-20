@@ -20,6 +20,7 @@ private:
 
     std::vector<SDL_Surface*> pSurfaceRocket;
     std::vector<SDL_Texture*> pTextureRocket;
+    int spriteState;
 
     SDL_Surface *pSurfaceCollisionRocket;
 

@@ -8,6 +8,7 @@ Rocket::Rocket() {
     posX = WSCREEN / 2;
     posY = HSCREEN / 2;
     moving = false;
+    spriteState = 0;
 
     pSurfaceCollisionRocket = SDL_LoadBMP("../src/img/rocketCollision.bmp");
     if (!pSurfaceCollisionRocket) {
@@ -42,14 +43,23 @@ void Rocket::loadSurfaces() {
 }
 
 void Rocket::display(SDL_Surface *pSurfaceCollision) {
+
+    int spriteToDisplay = 0;
+    if (moving) {
+        spriteState = (spriteState + 1) % 30;
+        spriteToDisplay = (spriteState + 10) / 10;
+    } else {
+        spriteState = 0;
+    }
+
     SDL_Rect dest = {posX - pSurfaceRocket[0]->w / 2, posY - pSurfaceRocket[0]->h / 2, pSurfaceRocket[0]->w,
                      pSurfaceRocket[0]->h};
-    SDL_RenderCopy(pRenderer, pTextureRocket[1], NULL, &dest);
-    //SDL_DestroyTexture(pTextureRocket[0]);
+    SDL_RenderCopy(pRenderer, pTextureRocket[spriteToDisplay], NULL, &dest);
+    //SDL_DestroyTexture(pTextureRocket[spriteState]);
 
     // affichage de la hitbox de la fusée
-    SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSurfaceCollisionRocket->format, 0, 255, 255));
-    SDL_BlitSurface(pSurfaceCollisionRocket, nullptr, pSurfaceCollision, &dest);
+    /*SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSurfaceCollisionRocket->format, 0, 255, 255));
+    SDL_BlitSurface(pSurfaceCollisionRocket, nullptr, pSurfaceCollision, &dest);*/
 }
 
 bool Rocket::checkAndRefreshPos() {
