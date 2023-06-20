@@ -8,10 +8,7 @@ Rocket::Rocket() {
     posX = WSCREEN / 2;
     posY = HSCREEN / 2;
     moving = false;
-    pSurfaceRocket = SDL_LoadBMP("../src/img/rocket.bmp");
-    if (!pSurfaceRocket) {
-        std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
-    }
+
     pSurfaceCollisionRocket = SDL_LoadBMP("../src/img/rocketCollision.bmp");
     if (!pSurfaceCollisionRocket) {
         std::cout << "Echec de chargement du sprite de collision : " << SDL_GetError() << std::endl;
@@ -19,29 +16,45 @@ Rocket::Rocket() {
 }
 
 Rocket::~Rocket() {
-    SDL_FreeSurface(pSurfaceRocket);
+    for (int i = 0; i < NB_SPRITE_ROCKET; i++) {
+        SDL_FreeSurface(pSurfaceRocket[i]);
+    }
     SDL_FreeSurface(pSurfaceCollisionRocket);
 }
 
-void Rocket::display(SDL_Renderer *pRenderer, SDL_Surface* pSurfaceCollision) {
-    SDL_SetColorKey(pSurfaceRocket, SDL_TRUE, SDL_MapRGB(pSurfaceRocket->format, 0, 255, 255));
-    pTextureRocket = SDL_CreateTextureFromSurface(pRenderer, pSurfaceRocket);
-    if (pTextureRocket) {
-        SDL_Rect dest = {posX - pSurfaceRocket->w / 2, posY - pSurfaceRocket->h / 2, pSurfaceRocket->w, pSurfaceRocket->h};
-        SDL_RenderCopy(pRenderer, pTextureRocket, NULL, &dest);
-        SDL_DestroyTexture(pTextureRocket);
+void Rocket::loadSurfaces() {
+    for (int i = 0; i < NB_SPRITE_ROCKET; i++) {
+        std::string basePath = "../src/img/rocket/rocket_";
+        std::string fullPath = basePath + std::to_string(i) + ".bmp";
 
-        // affichage de la hitbox de la fusée
-        SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSurfaceCollisionRocket->format, 0, 255, 255));
-        SDL_BlitSurface(pSurfaceCollisionRocket, nullptr, pSurfaceCollision, &dest);
-    } else {
-        std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+        pSurfaceRocket.push_back(SDL_LoadBMP(fullPath.c_str()));
+        if (!pSurfaceRocket[i]) {
+            std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
+        }
+
+        SDL_SetColorKey(pSurfaceRocket[i], SDL_TRUE, SDL_MapRGB(pSurfaceRocket[i]->format, 0, 255, 255));
+        pTextureRocket.push_back(SDL_CreateTextureFromSurface(pRenderer, pSurfaceRocket[i]));
+        if (!pTextureRocket[i]) {
+            std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+            return;
+        }
     }
+}
+
+void Rocket::display(SDL_Surface *pSurfaceCollision) {
+    SDL_Rect dest = {posX - pSurfaceRocket[0]->w / 2, posY - pSurfaceRocket[0]->h / 2, pSurfaceRocket[0]->w,
+                     pSurfaceRocket[0]->h};
+    SDL_RenderCopy(pRenderer, pTextureRocket[1], NULL, &dest);
+    //SDL_DestroyTexture(pTextureRocket[0]);
+
+    // affichage de la hitbox de la fusée
+    SDL_SetColorKey(pSurfaceCollisionRocket, SDL_TRUE, SDL_MapRGB(pSurfaceCollisionRocket->format, 0, 255, 255));
+    SDL_BlitSurface(pSurfaceCollisionRocket, nullptr, pSurfaceCollision, &dest);
 }
 
 bool Rocket::checkAndRefreshPos() {
     if (moving) {
-        if (posY >= 0 - pSurfaceRocket->h / 2) {
+        if (posY >= 0 - pSurfaceRocket[0]->h / 2) {
             posY = posY - ROCKET_SPEED;
             return false;
         } else {
@@ -82,3 +95,6 @@ void Rocket::reset() {
     moving = false;
 }
 
+void Rocket::setPRenderer(SDL_Renderer *pRenderer) {
+    Rocket::pRenderer = pRenderer;
+}

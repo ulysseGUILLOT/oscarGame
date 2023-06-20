@@ -13,6 +13,9 @@ Game::Game() {
     initWindow();
     initRenderer();
 
+    rocket.setPRenderer(pRenderer);
+    rocket.loadSurfaces();
+
     pSurfaceBackground = SDL_LoadBMP("../src/img/background.bmp");
     if (!pSurfaceBackground) {
         std::cout << "Echec de chargement de l'image background : " << SDL_GetError() << std::endl;
@@ -127,7 +130,7 @@ void Game::presentRenderer() {
     SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
 
     // affichage de la fusée
-    rocket.display(pRenderer, pSurfaceCollision);
+    rocket.display(pSurfaceCollision);
 
     // affichage des déchets et test de collision avec la fusée
     for (int i = 0; i < trashes.size(); i++) {

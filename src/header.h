@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <vector>
 #include <SDL.h>
 #include <SDL_ttf.h>

@@ -4,7 +4,6 @@
 int main(int argc, char *argv[]) {
     srand(time(nullptr));
     TTF_Init();
-    //Mix_Init(MIX_INIT_FLAC);
 
     // ouverture de l'audio
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)

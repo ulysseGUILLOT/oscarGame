@@ -5,6 +5,7 @@
 #ifndef OSCARGAME_ROCKET_H
 #define OSCARGAME_ROCKET_H
 
+#define NB_SPRITE_ROCKET 4
 #define ROCKET_SPEED 4
 
 #include "header.h"
@@ -15,8 +16,10 @@ private:
     int posY;
     bool moving;
 
-    SDL_Surface *pSurfaceRocket;
-    SDL_Texture *pTextureRocket;
+    SDL_Renderer *pRenderer;
+
+    std::vector<SDL_Surface*> pSurfaceRocket;
+    std::vector<SDL_Texture*> pTextureRocket;
 
     SDL_Surface *pSurfaceCollisionRocket;
 
@@ -25,11 +28,13 @@ public:
 
     ~Rocket();
 
+    void loadSurfaces();
+
     bool checkAndRefreshPos();
 
     void reset();
 
-    void display(SDL_Renderer *pRenderer, SDL_Surface *pSurfaceCollision);
+    void display(SDL_Surface *pSurfaceCollision);
 
     bool isMoving() const;
 
@@ -42,6 +47,8 @@ public:
     int getPosY() const;
 
     void setPosY(int posY);
+
+    void setPRenderer(SDL_Renderer *pRenderer);
 };
 
 
