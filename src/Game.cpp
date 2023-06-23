@@ -145,7 +145,6 @@ void Game::presentRenderer() {
             } else {
                 // todo : créer un attribut indiquant la fin du jeu qui ne ferme pas la fenêtre, puis afficher un écran de défaite
                 std::cout << "fin de la partie" << std::endl;
-                SDL_Delay(3000);
                 active = false;
             }
         }

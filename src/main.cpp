@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 
     // initialisation de la partie
     Game game;
+    game.addTrash();
 
     // lancement de la boucle de jeu
     SDL_Event event;
