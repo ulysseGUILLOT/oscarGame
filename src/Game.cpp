@@ -65,7 +65,7 @@ Game::Game() {
         active = false;
     }
 
-    pFont = TTF_OpenFont("../src/font/Play-Bold.ttf", 50);
+    pFont = TTF_OpenFont("../src/font/anton.ttf", 50);
     if (!pFont) {
         std::cout << "Echec du chargement de la police d'ecriture: " << TTF_GetError() << std::endl;
     }
