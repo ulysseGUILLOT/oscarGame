@@ -6,8 +6,7 @@ int main(int argc, char *argv[]) {
     TTF_Init();
 
     // ouverture de l'audio
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-    {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         std::cout << "Erreur lors de l'initialisation de l'audio : " << Mix_GetError() << std::endl;
         SDL_Quit();
     }
@@ -15,6 +14,9 @@ int main(int argc, char *argv[]) {
     // initialisation de la partie
     Game game;
     game.addTrash();
+
+    // connexion du joystick
+    SDL_Joystick *pJoystick = connectJoystick();
 
     // lancement de la boucle de jeu
     SDL_Event event;
@@ -31,8 +33,7 @@ int main(int argc, char *argv[]) {
                         game.setActive(false);
                         break;
                     case SDLK_SPACE:
-                        if (!game.getRocket().isMoving())
-                        {
+                        if (!game.getRocket().isMoving()) {
                             game.playChunk(game.getPChunkLaunch(), 0);
                         }
                         game.getRocket().setMoving(true);
@@ -64,18 +65,33 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-SDL_Color getPixelColor(const SDL_Surface* pSurface, int x, int y) {
+SDL_Color getPixelColor(const SDL_Surface *pSurface, int x, int y) {
     // Bytes per pixel
     const Uint8 Bpp = pSurface->format->BytesPerPixel;
 
-    Uint8* pPixel = (Uint8*)pSurface->pixels + y * pSurface->pitch + x * Bpp;
+    Uint8 *pPixel = (Uint8 *) pSurface->pixels + y * pSurface->pitch + x * Bpp;
 
-    Uint32 PixelData = *(Uint32*)pPixel;
+    Uint32 PixelData = *(Uint32 *) pPixel;
 
-    SDL_Color Color = { 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE };
+    SDL_Color Color = {0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE};
 
     // Retrieve the RGB values of the specific pixel
     SDL_GetRGB(PixelData, pSurface->format, &Color.r, &Color.g, &Color.b);
 
     return Color;
+}
+
+SDL_Joystick *connectJoystick() {
+    SDL_Joystick *pJoystick = nullptr;
+    if (SDL_NumJoysticks() != 0) {
+        pJoystick = SDL_JoystickOpen(0);
+        if (!pJoystick) {
+            std::cout << "Erreur lors de la connexion du joystick : " << SDL_GetError() << std::endl;
+            SDL_Quit();
+        }
+    } else {
+        std::cout << "Pas de joystick connecte !" << std::endl;
+    }
+
+    return pJoystick;
 }

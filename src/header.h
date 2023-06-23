@@ -16,11 +16,13 @@
 #include <cstring>
 #include <vector>
 #include <SDL.h>
+#include <SDL_gamecontroller.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include <cmath>
 
 // proto :
 SDL_Color getPixelColor(const SDL_Surface *pSurface, int x, int y);
+SDL_Joystick *connectJoystick();
 
 #endif //OSCARGAME_HEADER_H

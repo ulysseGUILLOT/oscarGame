@@ -91,7 +91,7 @@ Game::~Game() {
 }
 
 void Game::initSdl() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0) {
         std::cout << "Erreur lors de l'initialisation de SDL : " << SDL_GetError() << std::endl;
         return;
     }
