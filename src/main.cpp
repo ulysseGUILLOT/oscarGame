@@ -47,6 +47,16 @@ int main(int argc, char *argv[]) {
                         break;
                 }
             }
+
+            if (event.type == SDL_JOYBUTTONDOWN) {
+                if (event.jbutton.button == 0 || event.jbutton.button == 3) {
+                    if (!game.getRocket().isMoving()) {
+                        game.playChunk(game.getPChunkLaunch(), 0);
+                    }
+                    game.getRocket().setMoving(true);
+                    break;
+                }
+            }
         }
 
         // réactualise la position de la fusée
