@@ -5,6 +5,8 @@
 #ifndef OSCARGAME_GAME_H
 #define OSCARGAME_GAME_H
 
+#define NB_SPRITE_EXPLOSION 2
+
 #include "header.h"
 #include "Trash.h"
 #include "Rocket.h"
@@ -36,6 +38,9 @@ private:
     SDL_Surface *pSurfaceEmptyHeart;
     SDL_Texture *pTextureEmptyHeart;
 
+    std::vector<SDL_Texture*> pTextureExplosion;
+    int explosionState;
+
     SDL_Surface *pSurfaceCollision;
 
     TTF_Font *pFont;
@@ -44,6 +49,7 @@ private:
 
     Mix_Chunk *pChunkMusic;
     Mix_Chunk *pChunkLaunch;
+    int channelChunkLaunch;
     Mix_Chunk *pChunkCollision;
 
 public:
@@ -69,7 +75,7 @@ public:
 
     Mix_Chunk *loadChunk(const char *path);
 
-    void playChunk(Mix_Chunk *pSound, int loop);
+    int playChunk(Mix_Chunk *pSound, int loop);
 
     SDL_Renderer *getPRenderer() const;
 
@@ -116,6 +122,10 @@ public:
     Mix_Chunk *getPChunkCollision() const;
 
     void setPChunkCollision(Mix_Chunk *pChunkCollision);
+
+    int getChannelChunkLaunch() const;
+
+    void setChannelChunkLaunch(int channelChunkLaunch);
 };
 
 

@@ -138,6 +138,7 @@ void Game::presentRenderer() {
         trashes[i].toRender(pRenderer);
         collision = trashes[i].testCollision(0, 0, pSurfaceCollision);
         if (collision) {
+            Mix_HaltChannel(channelChunkLaunch);
             playChunk(pChunkCollision, 0);
             rocket.reset();
             if (lifeNb > 1) {
@@ -228,8 +229,9 @@ Mix_Chunk *Game::loadChunk(const char *path) {
     return pSound;
 }
 
-void Game::playChunk(Mix_Chunk *pSound, int loop) {
-    Mix_PlayChannel(-1, pSound, loop); // lecture de l'effet sonore
+int Game::playChunk(Mix_Chunk *pSound, int loop) {
+    int channel = Mix_PlayChannel(-1, pSound, loop); // lecture de l'effet sonore
+    return channel;
 }
 
 SDL_Renderer *Game::getPRenderer() const {
@@ -322,4 +324,12 @@ Mix_Chunk *Game::getPChunkCollision() const {
 
 void Game::setPChunkCollision(Mix_Chunk *pChunkCollision) {
     Game::pChunkCollision = pChunkCollision;
+}
+
+int Game::getChannelChunkLaunch() const {
+    return channelChunkLaunch;
+}
+
+void Game::setChannelChunkLaunch(int channelChunkLaunch) {
+    Game::channelChunkLaunch = channelChunkLaunch;
 }

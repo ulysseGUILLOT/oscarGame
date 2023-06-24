@@ -25,13 +25,13 @@ void Rocket::loadSurfaces() {
 
         pSurfaceRocket.push_back(SDL_LoadBMP(fullPath.c_str()));
         if (!pSurfaceRocket[i]) {
-            std::cout << "Echec de chargement du sprite : " << SDL_GetError() << std::endl;
+            std::cout << "Echec de chargement du sprite rocket : " << SDL_GetError() << std::endl;
         }
 
         SDL_SetColorKey(pSurfaceRocket[i], SDL_TRUE, SDL_MapRGB(pSurfaceRocket[i]->format, 0, 255, 255));
         pTextureRocket.push_back(SDL_CreateTextureFromSurface(pRenderer, pSurfaceRocket[i]));
         if (!pTextureRocket[i]) {
-            std::cout << "Echec de la creation de la texture : " << SDL_GetError() << std::endl;
+            std::cout << "Echec de la creation de la texture rocket : " << SDL_GetError() << std::endl;
             return;
         }
     }
