@@ -71,6 +71,17 @@ Game::Game() {
         std::cout << "Echec du chargement de la police d'ecriture: " << TTF_GetError() << std::endl;
     }
 
+    pSurfaceStartMenuText = SDL_LoadBMP("../src/img/startMenuText.bmp");
+    if (!pSurfaceStartMenuText) {
+        std::cout << "Echec de chargement de l'image du texte start menu : " << SDL_GetError() << std::endl;
+    }
+    SDL_SetColorKey(pSurfaceStartMenuText, SDL_TRUE, SDL_MapRGB(pSurfaceStartMenuText->format, 0, 255, 255));
+    pTextureStartMenuText = SDL_CreateTextureFromSurface(pRenderer, pSurfaceStartMenuText);
+    if (!pTextureStartMenuText) {
+        std::cout << "Echec de la creation de la texture du texte start menu : " << SDL_GetError() << std::endl;
+        active = false;
+    }
+
     pChunkMusic = loadChunk("../src/sound/music.wav");
     pChunkLaunch = loadChunk("../src/sound/launch.wav");
     pChunkCollision = loadChunk("../src/sound/collision.wav");
@@ -85,6 +96,7 @@ Game::~Game() {
     SDL_DestroyTexture(pTextureEarth);
     SDL_DestroyTexture(pTextureFullHeart);
     SDL_DestroyTexture(pTextureEmptyHeart);
+    SDL_DestroyTexture(pTextureStartMenuText);
     SDL_DestroyRenderer(pRenderer);
     TTF_CloseFont(pFont);
     SDL_DestroyWindow(pWindow);
@@ -121,6 +133,7 @@ void Game::initRenderer() {
 void Game::renderStartScreen() {
     SDL_RenderClear(pRenderer);
     displayBackground();
+    displayStatMenuText();
     displayEarth();
     SDL_RenderPresent(pRenderer);
 }
@@ -195,6 +208,11 @@ void Game::displayEarth() {
 void Game::displayBackground() {
     SDL_Rect dest = {0, 0, WSCREEN, HSCREEN};
     SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
+}
+
+void Game::displayStatMenuText() {
+    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceStartMenuText->w / 2), (HSCREEN / 2) - (pSurfaceStartMenuText->h / 2), pSurfaceStartMenuText->w, pSurfaceStartMenuText->h};
+    SDL_RenderCopy(pRenderer, pTextureStartMenuText, NULL, &dest);
 }
 
 void Game::displayHearts() {

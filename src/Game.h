@@ -48,6 +48,9 @@ private:
     SDL_Surface *pSurfaceTextScore;
     SDL_Texture *pTextureTextScore;
 
+    SDL_Surface *pSurfaceStartMenuText;
+    SDL_Texture *pTextureStartMenuText;
+
     Mix_Chunk *pChunkMusic;
     Mix_Chunk *pChunkLaunch;
     int channelChunkLaunch;
@@ -71,6 +74,8 @@ public:
     void addTrash();
 
     void displayBackground();
+
+    void displayStatMenuText();
 
     void displayEarth();
 
