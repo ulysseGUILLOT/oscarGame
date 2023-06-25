@@ -83,6 +83,17 @@ Game::Game() {
         active = false;
     }
 
+    pSurfaceGameOverText = SDL_LoadBMP("../src/img/gameOverText.bmp");
+    if (!pSurfaceGameOverText) {
+        std::cout << "Echec de chargement de l'image du texte game over : " << SDL_GetError() << std::endl;
+    }
+    SDL_SetColorKey(pSurfaceGameOverText, SDL_TRUE, SDL_MapRGB(pSurfaceGameOverText->format, 0, 255, 255));
+    pTextureGameOverText = SDL_CreateTextureFromSurface(pRenderer, pSurfaceGameOverText);
+    if (!pTextureGameOverText) {
+        std::cout << "Echec de la creation de la texture du texte game over : " << SDL_GetError() << std::endl;
+        active = false;
+    }
+
     pChunkMusicPlaying = loadChunk("../src/sound/music.wav");
     pChunkMusicStartMenu = loadChunk("../src/sound/musicStartMenu.wav");
     pChunkLaunch = loadChunk("../src/sound/launch.wav");
@@ -100,6 +111,7 @@ Game::~Game() {
     SDL_DestroyTexture(pTextureFullHeart);
     SDL_DestroyTexture(pTextureEmptyHeart);
     SDL_DestroyTexture(pTextureStartMenuText);
+    SDL_DestroyTexture(pTextureGameOverText);
     SDL_DestroyRenderer(pRenderer);
     TTF_CloseFont(pFont);
     SDL_DestroyWindow(pWindow);
@@ -201,13 +213,13 @@ void Game::renderPlaying() {
 void Game::renderGameOver() {
     SDL_RenderClear(pRenderer);
     displayBackground();
-    displayEarth();
     displayGameOverText();
     SDL_RenderPresent(pRenderer);
 }
 
 void Game::displayGameOverText() {
-
+    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceGameOverText->w / 2), (HSCREEN / 2) - (pSurfaceGameOverText->h / 2), pSurfaceGameOverText->w, pSurfaceGameOverText->h};
+    SDL_RenderCopy(pRenderer, pTextureGameOverText, NULL, &dest);
 }
 
 void Game::addTrash() {

@@ -52,6 +52,9 @@ private:
     SDL_Surface *pSurfaceStartMenuText;
     SDL_Texture *pTextureStartMenuText;
 
+    SDL_Surface *pSurfaceGameOverText;
+    SDL_Texture *pTextureGameOverText;
+
     Mix_Chunk *pChunkMusicPlaying;
     int channelChunkMusicPlaying;
     Mix_Chunk *pChunkMusicStartMenu;
