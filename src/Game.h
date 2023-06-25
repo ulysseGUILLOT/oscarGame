@@ -63,9 +63,13 @@ public:
 
     void initRenderer();
 
-    void presentRenderer();
+    void renderPlaying();
 
     void addTrash();
+
+    void displayBackground();
+
+    void displayEarth();
 
     void displayHearts();
 

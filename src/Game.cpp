@@ -117,17 +117,14 @@ void Game::initRenderer() {
     }
 }
 
-void Game::presentRenderer() {
+void Game::renderPlaying() {
     SDL_RenderClear(pRenderer);
 
     //Affichage du background
-    SDL_Rect dest = {0, 0, WSCREEN, HSCREEN};
-    SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
+    displayBackground();
 
     //Affichage de la terre
-    dest = {(WSCREEN / 2) - (pSurfaceEarth->w / 2), (HSCREEN / 2) - (pSurfaceEarth->h / 2), pSurfaceEarth->w,
-            pSurfaceEarth->h};
-    SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
+    displayEarth();
 
     // affichage de la fusée
     rocket.display(pSurfaceCollision);
@@ -159,6 +156,7 @@ void Game::presentRenderer() {
 
     // si dev mode : affichage de la surface de la collision
     if (devMode) {
+        SDL_Rect dest = {0, 0, WSCREEN, HSCREEN};
         SDL_Texture *pTextureDev = SDL_CreateTextureFromSurface(pRenderer, pSurfaceCollision);
         dest = {0, 0, WSCREEN, HSCREEN};
         SDL_RenderCopy(pRenderer, pTextureDev, nullptr, &dest);
@@ -178,6 +176,17 @@ void Game::presentRenderer() {
 void Game::addTrash() {
     Trash trash;
     trashes.push_back(trash);
+}
+
+void Game::displayEarth() {
+    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceEarth->w / 2), (HSCREEN / 2) - (pSurfaceEarth->h / 2), pSurfaceEarth->w,
+                     pSurfaceEarth->h};
+    SDL_RenderCopy(pRenderer, pTextureEarth, NULL, &dest);
+}
+
+void Game::displayBackground() {
+    SDL_Rect dest = {0, 0, WSCREEN, HSCREEN};
+    SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
 }
 
 void Game::displayHearts() {

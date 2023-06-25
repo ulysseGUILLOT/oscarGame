@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         }
 
         // affichage de la fenetre de jeu
-        game.presentRenderer();
+        game.renderPlaying();
     }
 
     // detruire la partie et quitter
