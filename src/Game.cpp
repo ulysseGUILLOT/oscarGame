@@ -134,7 +134,7 @@ void Game::initRenderer() {
 void Game::renderStartScreen() {
     SDL_RenderClear(pRenderer);
     displayBackground();
-    displayStatMenuText();
+    displayStartMenuText();
     displayEarth();
     SDL_RenderPresent(pRenderer);
 }
@@ -211,8 +211,8 @@ void Game::displayBackground() {
     SDL_RenderCopy(pRenderer, pTextureBackground, NULL, &dest);
 }
 
-void Game::displayStatMenuText() {
-    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceStartMenuText->w / 2), (HSCREEN / 2) - (pSurfaceStartMenuText->h / 2), pSurfaceStartMenuText->w, pSurfaceStartMenuText->h};
+void Game::displayStartMenuText() {
+    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceStartMenuText->w / 2), (HSCREEN / 2) - (pSurfaceStartMenuText->h / 2) - 60, pSurfaceStartMenuText->w, pSurfaceStartMenuText->h};
     SDL_RenderCopy(pRenderer, pTextureStartMenuText, NULL, &dest);
 }
 

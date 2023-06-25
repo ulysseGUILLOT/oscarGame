@@ -77,7 +77,7 @@ public:
 
     void displayBackground();
 
-    void displayStatMenuText();
+    void displayStartMenuText();
 
     void displayEarth();
 
