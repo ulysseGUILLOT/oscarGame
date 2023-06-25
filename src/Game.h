@@ -51,7 +51,9 @@ private:
     SDL_Surface *pSurfaceStartMenuText;
     SDL_Texture *pTextureStartMenuText;
 
-    Mix_Chunk *pChunkMusic;
+    Mix_Chunk *pChunkMusicPlaying;
+    Mix_Chunk *pChunkMusicStartMenu;
+    int channelChunkMusicStartMenu;
     Mix_Chunk *pChunkLaunch;
     int channelChunkLaunch;
     Mix_Chunk *pChunkCollision;
@@ -138,6 +140,8 @@ public:
     int getChannelChunkLaunch() const;
 
     void setChannelChunkLaunch(int channelChunkLaunch);
+
+    int getChannelChunkMusicStartMenu() const;
 
     bool isPlaying() const;
 

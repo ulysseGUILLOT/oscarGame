@@ -15,6 +15,9 @@ int main(int argc, char *argv[]) {
     Game game;
     game.addTrash();
 
+    // désactive le curseur de la souris
+    SDL_ShowCursor(SDL_DISABLE);
+
     // connexion du joystick
     SDL_Joystick *pJoystick = connectJoystick();
 
@@ -42,6 +45,8 @@ int main(int argc, char *argv[]) {
                             }
                             game.getRocket().setMoving(true);
                         } else {
+                            Mix_HaltChannel(game.getChannelChunkMusicStartMenu());
+                            game.playChunk(game.getPChunkMusic(), -1);
                             game.setPlaying(true);
                         }
                         break;
@@ -63,6 +68,8 @@ int main(int argc, char *argv[]) {
                         }
                         game.getRocket().setMoving(true);
                     } else {
+                        Mix_HaltChannel(game.getChannelChunkMusicStartMenu());
+                        game.playChunk(game.getPChunkMusic(), -1);
                         game.setPlaying(true);
                     }
                 }

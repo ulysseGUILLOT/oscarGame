@@ -82,12 +82,13 @@ Game::Game() {
         active = false;
     }
 
-    pChunkMusic = loadChunk("../src/sound/music.wav");
+    pChunkMusicPlaying = loadChunk("../src/sound/music.wav");
+    pChunkMusicStartMenu = loadChunk("../src/sound/musicStartMenu.wav");
     pChunkLaunch = loadChunk("../src/sound/launch.wav");
     pChunkCollision = loadChunk("../src/sound/collision.wav");
 
     // lancement de la musique de fond en boucle
-    playChunk(pChunkMusic, -1);
+    channelChunkMusicStartMenu = playChunk(pChunkMusicStartMenu, -1);
 }
 
 Game::~Game() {
@@ -338,11 +339,11 @@ bool Game::isDevMode() {
 }
 
 Mix_Chunk *Game::getPChunkMusic() const {
-    return pChunkMusic;
+    return pChunkMusicPlaying;
 }
 
 void Game::setPChunkMusic(Mix_Chunk *pChunkMusic) {
-    Game::pChunkMusic = pChunkMusic;
+    Game::pChunkMusicPlaying = pChunkMusic;
 }
 
 Mix_Chunk *Game::getPChunkLaunch() const {
@@ -375,4 +376,8 @@ bool Game::isPlaying() const {
 
 void Game::setPlaying(bool playing) {
     Game::playing = playing;
+}
+
+int Game::getChannelChunkMusicStartMenu() const {
+    return channelChunkMusicStartMenu;
 }
