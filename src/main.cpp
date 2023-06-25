@@ -46,15 +46,14 @@ int main(int argc, char *argv[]) {
                             game.getRocket().setMoving(true);
                         } else if (!game.isGameOver()){
                             Mix_HaltChannel(game.getChannelChunkMusicStartMenu());
-                            game.playChunk(game.getPChunkMusic(), -1);
+                            game.setChannelChunkMusicPlaying(game.playChunk(game.getPChunkMusic(), -1));
                             game.setPlaying(true);
                         } else {
                             Mix_HaltChannel(game.getChannelChunkMusicPlaying());
                             game.setChannelChunkMusicStartMenu(game.playChunk(game.getPChunkMusicStartMenu(), -1));
                             game.setGameOver(false);
                             game.renderStartScreen();
-                            game.setScore(0);
-                            game.setLifeNb(3);
+                            game.resetGame();
                         }
                         break;
                     case SDLK_d:
@@ -83,8 +82,7 @@ int main(int argc, char *argv[]) {
                         game.setChannelChunkMusicStartMenu(game.playChunk(game.getPChunkMusicStartMenu(), -1));
                         game.setGameOver(false);
                         game.renderStartScreen();
-                        game.setScore(0);
-                        game.setLifeNb(3);
+                        game.resetGame();
                     }
                 }
             }
@@ -96,6 +94,9 @@ int main(int argc, char *argv[]) {
                 // ajoute un dechet si la fusée atteint le ciel
                 game.addTrash();
                 game.setScore(game.getScore() + 10);
+                if (game.getScore() % 50 == 0 && game.getScore() != 0) {
+                    game.playChunk(game.getPChunkScoreNotification(), 0);
+                }
             }
 
             // affichage de la fenetre de jeu

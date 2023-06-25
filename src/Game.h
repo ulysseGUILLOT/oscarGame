@@ -59,6 +59,7 @@ private:
     Mix_Chunk *pChunkLaunch;
     int channelChunkLaunch;
     Mix_Chunk *pChunkCollision;
+    Mix_Chunk *pChunkScoreNotification;
 
 public:
     Game();
@@ -164,6 +165,10 @@ public:
     int getChannelChunkMusicPlaying() const;
 
     void setChannelChunkMusicPlaying(int channelChunkMusicPlaying);
+
+    Mix_Chunk *getPChunkScoreNotification() const;
+
+    void resetGame();
 };
 
 

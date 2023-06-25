@@ -87,6 +87,7 @@ Game::Game() {
     pChunkMusicStartMenu = loadChunk("../src/sound/musicStartMenu.wav");
     pChunkLaunch = loadChunk("../src/sound/launch.wav");
     pChunkCollision = loadChunk("../src/sound/collision.wav");
+    pChunkScoreNotification = loadChunk("../src/sound/scoreNotification.wav");
 
     // lancement de la musique de fond en boucle
     channelChunkMusicStartMenu = playChunk(pChunkMusicStartMenu, -1);
@@ -418,4 +419,15 @@ int Game::getChannelChunkMusicPlaying() const {
 
 void Game::setChannelChunkMusicPlaying(int channelChunkMusicPlaying) {
     Game::channelChunkMusicPlaying = channelChunkMusicPlaying;
+}
+
+Mix_Chunk *Game::getPChunkScoreNotification() const {
+    return pChunkScoreNotification;
+}
+
+void Game::resetGame() {
+    score = 0;
+    lifeNb = 3;
+    trashes.clear();
+    addTrash();
 }
