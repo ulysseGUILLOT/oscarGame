@@ -18,6 +18,9 @@ int main(int argc, char *argv[]) {
     // connexion du joystick
     SDL_Joystick *pJoystick = connectJoystick();
 
+    // affichage de l'écran de démarrage
+    game.renderStartScreen();
+
     // lancement de la boucle de jeu
     SDL_Event event;
     while (game.isActive()) {
@@ -33,10 +36,14 @@ int main(int argc, char *argv[]) {
                         game.setActive(false);
                         break;
                     case SDLK_SPACE:
-                        if (!game.getRocket().isMoving()) {
-                            game.setChannelChunkLaunch(game.playChunk(game.getPChunkLaunch(), 0));
+                        if (game.isPlaying()) {
+                            if (!game.getRocket().isMoving()) {
+                                game.setChannelChunkLaunch(game.playChunk(game.getPChunkLaunch(), 0));
+                            }
+                            game.getRocket().setMoving(true);
+                        } else {
+                            game.setPlaying(true);
                         }
-                        game.getRocket().setMoving(true);
                         break;
                     case SDLK_d:
                         if (game.isDevMode()) {
@@ -50,24 +57,29 @@ int main(int argc, char *argv[]) {
 
             if (event.type == SDL_JOYBUTTONDOWN) {
                 if (event.jbutton.button == 0 || event.jbutton.button == 3) {
-                    if (!game.getRocket().isMoving()) {
-                        game.setChannelChunkLaunch(game.playChunk(game.getPChunkLaunch(), 0));
+                    if (game.isPlaying()) {
+                        if (!game.getRocket().isMoving()) {
+                            game.setChannelChunkLaunch(game.playChunk(game.getPChunkLaunch(), 0));
+                        }
+                        game.getRocket().setMoving(true);
+                    } else {
+                        game.setPlaying(true);
                     }
-                    game.getRocket().setMoving(true);
-                    break;
                 }
             }
         }
 
-        // réactualise la position de la fusée
-        if (game.getRocket().checkAndRefreshPos()) {
-            // ajoute un dechet si la fusée atteint le ciel
-            game.addTrash();
-            game.setScore(game.getScore() + 10);
-        }
+        if (game.isPlaying()) {
+            // réactualise la position de la fusée
+            if (game.getRocket().checkAndRefreshPos()) {
+                // ajoute un dechet si la fusée atteint le ciel
+                game.addTrash();
+                game.setScore(game.getScore() + 10);
+            }
 
-        // affichage de la fenetre de jeu
-        game.renderPlaying();
+            // affichage de la fenetre de jeu
+            game.renderPlaying();
+        }
     }
 
     // detruire la partie et quitter

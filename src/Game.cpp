@@ -9,6 +9,7 @@ Game::Game() {
     score = 0;
     lifeNb = LIFENB;
     active = true;
+    playing = false;
     initSdl();
     initWindow();
     initRenderer();
@@ -115,6 +116,13 @@ void Game::initRenderer() {
         SDL_Quit();
         return;
     }
+}
+
+void Game::renderStartScreen() {
+    SDL_RenderClear(pRenderer);
+    displayBackground();
+    displayEarth();
+    SDL_RenderPresent(pRenderer);
 }
 
 void Game::renderPlaying() {
@@ -341,4 +349,12 @@ int Game::getChannelChunkLaunch() const {
 
 void Game::setChannelChunkLaunch(int channelChunkLaunch) {
     Game::channelChunkLaunch = channelChunkLaunch;
+}
+
+bool Game::isPlaying() const {
+    return playing;
+}
+
+void Game::setPlaying(bool playing) {
+    Game::playing = playing;
 }

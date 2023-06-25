@@ -17,6 +17,7 @@ private:
     int score;
     int lifeNb;
     bool active;
+    bool playing;
 
     Uint32 lastFrameTime;
 
@@ -62,6 +63,8 @@ public:
     void initWindow();
 
     void initRenderer();
+
+    void renderStartScreen();
 
     void renderPlaying();
 
@@ -130,6 +133,10 @@ public:
     int getChannelChunkLaunch() const;
 
     void setChannelChunkLaunch(int channelChunkLaunch);
+
+    bool isPlaying() const;
+
+    void setPlaying(bool playing);
 };
 
 
