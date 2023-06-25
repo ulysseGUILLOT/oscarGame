@@ -44,10 +44,17 @@ int main(int argc, char *argv[]) {
                                 game.setChannelChunkLaunch(game.playChunk(game.getPChunkLaunch(), 0));
                             }
                             game.getRocket().setMoving(true);
-                        } else {
+                        } else if (!game.isGameOver()){
                             Mix_HaltChannel(game.getChannelChunkMusicStartMenu());
                             game.playChunk(game.getPChunkMusic(), -1);
                             game.setPlaying(true);
+                        } else {
+                            Mix_HaltChannel(game.getChannelChunkMusicPlaying());
+                            game.setChannelChunkMusicStartMenu(game.playChunk(game.getPChunkMusicStartMenu(), -1));
+                            game.setGameOver(false);
+                            game.renderStartScreen();
+                            game.setScore(0);
+                            game.setLifeNb(3);
                         }
                         break;
                     case SDLK_d:
@@ -67,10 +74,17 @@ int main(int argc, char *argv[]) {
                             game.setChannelChunkLaunch(game.playChunk(game.getPChunkLaunch(), 0));
                         }
                         game.getRocket().setMoving(true);
-                    } else {
+                    } else if (!game.isGameOver()){
                         Mix_HaltChannel(game.getChannelChunkMusicStartMenu());
-                        game.playChunk(game.getPChunkMusic(), -1);
+                        game.setChannelChunkMusicPlaying(game.playChunk(game.getPChunkMusic(), -1));
                         game.setPlaying(true);
+                    } else {
+                        Mix_HaltChannel(game.getChannelChunkMusicPlaying());
+                        game.setChannelChunkMusicStartMenu(game.playChunk(game.getPChunkMusicStartMenu(), -1));
+                        game.setGameOver(false);
+                        game.renderStartScreen();
+                        game.setScore(0);
+                        game.setLifeNb(3);
                     }
                 }
             }
@@ -86,6 +100,10 @@ int main(int argc, char *argv[]) {
 
             // affichage de la fenetre de jeu
             game.renderPlaying();
+        }
+
+        if (game.isGameOver()) {
+            game.renderGameOver();
         }
     }
 

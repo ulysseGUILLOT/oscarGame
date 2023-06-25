@@ -10,6 +10,7 @@ Game::Game() {
     lifeNb = LIFENB;
     active = true;
     playing = false;
+    gameOver = false;
     initSdl();
     initWindow();
     initRenderer();
@@ -165,7 +166,8 @@ void Game::renderPlaying() {
             } else {
                 // todo : créer un attribut indiquant la fin du jeu qui ne ferme pas la fenêtre, puis afficher un écran de défaite
                 std::cout << "fin de la partie" << std::endl;
-                active = false;
+                playing = false;
+                gameOver = true;
             }
         }
     }
@@ -193,6 +195,18 @@ void Game::renderPlaying() {
 
     // afficher le rendu total
     SDL_RenderPresent(pRenderer);
+}
+
+void Game::renderGameOver() {
+    SDL_RenderClear(pRenderer);
+    displayBackground();
+    displayEarth();
+    displayGameOverText();
+    SDL_RenderPresent(pRenderer);
+}
+
+void Game::displayGameOverText() {
+
 }
 
 void Game::addTrash() {
@@ -380,4 +394,28 @@ void Game::setPlaying(bool playing) {
 
 int Game::getChannelChunkMusicStartMenu() const {
     return channelChunkMusicStartMenu;
+}
+
+bool Game::isGameOver() const {
+    return gameOver;
+}
+
+void Game::setGameOver(bool gameOver) {
+    Game::gameOver = gameOver;
+}
+
+Mix_Chunk *Game::getPChunkMusicStartMenu() const {
+    return pChunkMusicStartMenu;
+}
+
+void Game::setChannelChunkMusicStartMenu(int channelChunkMusicStartMenu) {
+    Game::channelChunkMusicStartMenu = channelChunkMusicStartMenu;
+}
+
+int Game::getChannelChunkMusicPlaying() const {
+    return channelChunkMusicPlaying;
+}
+
+void Game::setChannelChunkMusicPlaying(int channelChunkMusicPlaying) {
+    Game::channelChunkMusicPlaying = channelChunkMusicPlaying;
 }

@@ -18,6 +18,7 @@ private:
     int lifeNb;
     bool active;
     bool playing;
+    bool gameOver;
 
     Uint32 lastFrameTime;
 
@@ -52,6 +53,7 @@ private:
     SDL_Texture *pTextureStartMenuText;
 
     Mix_Chunk *pChunkMusicPlaying;
+    int channelChunkMusicPlaying;
     Mix_Chunk *pChunkMusicStartMenu;
     int channelChunkMusicStartMenu;
     Mix_Chunk *pChunkLaunch;
@@ -73,11 +75,15 @@ public:
 
     void renderPlaying();
 
+    void renderGameOver();
+
     void addTrash();
 
     void displayBackground();
 
     void displayStartMenuText();
+
+    void displayGameOverText();
 
     void displayEarth();
 
@@ -146,6 +152,18 @@ public:
     bool isPlaying() const;
 
     void setPlaying(bool playing);
+
+    bool isGameOver() const;
+
+    void setGameOver(bool gameOver);
+
+    Mix_Chunk *getPChunkMusicStartMenu() const;
+
+    void setChannelChunkMusicStartMenu(int channelChunkMusicStartMenu);
+
+    int getChannelChunkMusicPlaying() const;
+
+    void setChannelChunkMusicPlaying(int channelChunkMusicPlaying);
 };
 
 
