@@ -94,6 +94,9 @@ Game::Game() {
         active = false;
     }
 
+    loadSpritesExplosion();
+    explosionState = 0;
+
     pChunkMusicPlaying = loadChunk("../src/sound/music.wav");
     pChunkMusicStartMenu = loadChunk("../src/sound/musicStartMenu.wav");
     pChunkLaunch = loadChunk("../src/sound/launch.wav");
@@ -162,28 +165,31 @@ void Game::renderPlaying() {
     //Affichage de la terre
     displayEarth();
 
-    // affichage de la fusée
-    rocket.display(pSurfaceCollision);
+    // affichage de la fusée si la collision est finie
+    if (explosionState == 0) {
+        rocket.display(pSurfaceCollision);
+        explosionX = rocket.getPosX();
+        explosionY = rocket.getPosY();
+    }
 
     // affichage des déchets et test de collision avec la fusée
+    bool collision;
     for (int i = 0; i < trashes.size(); i++) {
-        bool collision = false;
         trashes[i].toRender(pRenderer);
         collision = trashes[i].testCollision(0, 0, pSurfaceCollision);
         if (collision) {
             Mix_HaltChannel(channelChunkLaunch);
             playChunk(pChunkCollision, 0);
-            rocket.reset();
-            if (lifeNb > 1) {
+            rocket.resetPosition();
+            if (lifeNb >= 1) {
                 lifeNb--;
-            } else {
-                // todo : créer un attribut indiquant la fin du jeu qui ne ferme pas la fenêtre, puis afficher un écran de défaite
-                std::cout << "fin de la partie" << std::endl;
-                playing = false;
-                gameOver = true;
             }
+            break;
         }
     }
+
+    // affichage de l'explosion si collision
+    displayExplosion(collision);
 
     // affichage des vies
     displayHearts();
@@ -218,7 +224,8 @@ void Game::renderGameOver() {
 }
 
 void Game::displayGameOverText() {
-    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceGameOverText->w / 2), (HSCREEN / 2) - (pSurfaceGameOverText->h / 2), pSurfaceGameOverText->w, pSurfaceGameOverText->h};
+    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceGameOverText->w / 2), (HSCREEN / 2) - (pSurfaceGameOverText->h / 2),
+                     pSurfaceGameOverText->w, pSurfaceGameOverText->h};
     SDL_RenderCopy(pRenderer, pTextureGameOverText, NULL, &dest);
 }
 
@@ -239,7 +246,9 @@ void Game::displayBackground() {
 }
 
 void Game::displayStartMenuText() {
-    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceStartMenuText->w / 2), (HSCREEN / 2) - (pSurfaceStartMenuText->h / 2) - 60, pSurfaceStartMenuText->w, pSurfaceStartMenuText->h};
+    SDL_Rect dest = {(WSCREEN / 2) - (pSurfaceStartMenuText->w / 2),
+                     (HSCREEN / 2) - (pSurfaceStartMenuText->h / 2) - 60, pSurfaceStartMenuText->w,
+                     pSurfaceStartMenuText->h};
     SDL_RenderCopy(pRenderer, pTextureStartMenuText, NULL, &dest);
 }
 
@@ -272,6 +281,32 @@ void Game::displayScore() {
     SDL_DestroyTexture(pTextureTextScore);
 }
 
+void Game::displayExplosion(bool collision) {
+    int spriteToDisplay = 0;
+    if (collision || explosionState != 0) {
+        spriteToDisplay = (explosionState) / 20;
+        explosionState = (explosionState + 1) % 40;
+
+        SDL_Rect dest = {explosionX - pSurfaceExplosions[0]->w / 2,
+                         explosionY - pSurfaceExplosions[0]->h / 2,
+                         pSurfaceExplosions[0]->w,
+                         pSurfaceExplosions[0]->h};
+
+        SDL_RenderCopy(pRenderer, pTextureExplosions[spriteToDisplay], NULL, &dest);
+
+        // la fusée est définie comme immobile à la fin de l'animation d'explosion
+        if (explosionState == 20 - 1) {
+            rocket.setMoving(false);
+            rocket.resetPosition();
+
+            if(lifeNb == 0) {
+                playing = false;
+                gameOver = true;
+            }
+        }
+    }
+}
+
 void Game::regulateFps() {
     Uint32 targetFrameTime = 1000 / FPS; // obtention du temps d'une frame en ms
     Uint32 elapsedFrameTime = SDL_GetTicks() - lastFrameTime;
@@ -282,10 +317,9 @@ void Game::regulateFps() {
 }
 
 Mix_Chunk *Game::loadChunk(const char *path) {
-    Mix_Chunk* pSound;
+    Mix_Chunk *pSound;
     pSound = Mix_LoadWAV(path);
-    if (pSound == NULL)
-    {
+    if (pSound == NULL) {
         std::cout << "Erreur lors du chargement de l'effet sonore : " << Mix_GetError() << std::endl;
         SDL_Quit();
     }
@@ -295,6 +329,35 @@ Mix_Chunk *Game::loadChunk(const char *path) {
 int Game::playChunk(Mix_Chunk *pSound, int loop) {
     int channel = Mix_PlayChannel(-1, pSound, loop); // lecture de l'effet sonore
     return channel;
+}
+
+void Game::resetGame() {
+    score = 0;
+    lifeNb = 3;
+    explosionState = 0;
+    trashes.clear();
+    rocket.resetPosition();
+    rocket.setMoving(false);
+    addTrash();
+}
+
+void Game::loadSpritesExplosion() {
+    for (int i = 0; i < NB_SPRITE_EXPLOSION; i++) {
+        std::string basePath = "../src/img/explosion/explosion_";
+        std::string fullPath = basePath + std::to_string(i) + ".bmp";
+
+        pSurfaceExplosions.push_back(SDL_LoadBMP(fullPath.c_str()));
+        if (!pSurfaceExplosions[i]) {
+            std::cout << "Echec de chargement du sprite explosion : " << SDL_GetError() << std::endl;
+        }
+
+        SDL_SetColorKey(pSurfaceExplosions[i], SDL_TRUE, SDL_MapRGB(pSurfaceExplosions[i]->format, 0, 255, 255));
+        pTextureExplosions.push_back(SDL_CreateTextureFromSurface(pRenderer, pSurfaceExplosions[i]));
+        if (!pTextureExplosions[i]) {
+            std::cout << "Echec de la creation de la texture explosion : " << SDL_GetError() << std::endl;
+            return;
+        }
+    }
 }
 
 SDL_Renderer *Game::getPRenderer() const {
@@ -435,11 +498,4 @@ void Game::setChannelChunkMusicPlaying(int channelChunkMusicPlaying) {
 
 Mix_Chunk *Game::getPChunkScoreNotification() const {
     return pChunkScoreNotification;
-}
-
-void Game::resetGame() {
-    score = 0;
-    lifeNb = 3;
-    trashes.clear();
-    addTrash();
 }

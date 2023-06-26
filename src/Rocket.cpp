@@ -103,9 +103,8 @@ void Rocket::setPosY(int posY) {
     Rocket::posY = posY;
 }
 
-void Rocket::reset() {
+void Rocket::resetPosition() {
     posY = HSCREEN / 2;
-    moving = false;
 }
 
 void Rocket::setPRenderer(SDL_Renderer *pRenderer) {

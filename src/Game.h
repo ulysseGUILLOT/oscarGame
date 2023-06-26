@@ -40,8 +40,11 @@ private:
     SDL_Surface *pSurfaceEmptyHeart;
     SDL_Texture *pTextureEmptyHeart;
 
-    std::vector<SDL_Texture*> pTextureExplosion;
+    std::vector<SDL_Surface *> pSurfaceExplosions;
+    std::vector<SDL_Texture*> pTextureExplosions;
     int explosionState;
+    int explosionX;
+    int explosionY;
 
     SDL_Surface *pSurfaceCollision;
 
@@ -94,6 +97,8 @@ public:
     void displayHearts();
 
     void displayScore();
+
+    void displayExplosion(bool collision);
 
     void regulateFps();
 
@@ -172,6 +177,8 @@ public:
     Mix_Chunk *getPChunkScoreNotification() const;
 
     void resetGame();
+
+    void loadSpritesExplosion();
 };
 
 

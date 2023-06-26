@@ -33,7 +33,7 @@ public:
 
     bool checkAndRefreshPos();
 
-    void reset();
+    void resetPosition();
 
     void display(SDL_Surface *pSurfaceCollision);
 
