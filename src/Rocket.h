@@ -6,7 +6,7 @@
 #define OSCARGAME_ROCKET_H
 
 #define NB_SPRITE_ROCKET 4
-#define ROCKET_SPEED 4
+#define ROCKET_SPEED 8
 
 #include "header.h"
 

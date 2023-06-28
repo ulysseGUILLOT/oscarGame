@@ -284,8 +284,8 @@ void Game::displayScore() {
 void Game::displayExplosion(bool collision) {
     int spriteToDisplay = 0;
     if (collision || explosionState != 0) {
-        spriteToDisplay = (explosionState) / 20;
-        explosionState = (explosionState + 1) % 40;
+        spriteToDisplay = (explosionState) / 10;
+        explosionState = (explosionState + 1) % 20;
 
         SDL_Rect dest = {explosionX - pSurfaceExplosions[0]->w / 2,
                          explosionY - pSurfaceExplosions[0]->h / 2,

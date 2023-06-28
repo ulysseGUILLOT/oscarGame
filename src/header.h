@@ -5,7 +5,7 @@
 #ifndef OSCARGAME_HEADER_H
 #define OSCARGAME_HEADER_H
 
-#define FPS 60
+#define FPS 30
 #define LIFENB 3
 #define WSCREEN 1920
 #define HSCREEN 1080
